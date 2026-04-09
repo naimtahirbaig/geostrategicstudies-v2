@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model Paper {
+  id        String   @id @default(cuid())
+  title     String
+  authors   String
+  journal   String?
+  abstract  String   @db.Text
+  tags      String?
+  type      String   @default("paper") // paper, brief, thesis
+  year      String?
+  doi       String?
+  url       String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id          String   @id @default(cuid())
+  title       String
+  category    String?
+  description String?
+  amazonUrl   String?
+  coverImage  String?
+  price       String?
+  published   Boolean  @default(true)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  excerpt   String?
+  author    String   @default("Dr. Naim Tahir Baig")
+  category  String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  organisation String?
+  subject      String
+  message      String   @db.Text
+  read         Boolean  @default(false)
+  archived     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model PaperSubmission {
+  id          String   @id @default(cuid())
+  authorName  String
+  authorEmail String
+  institution String?
+  type        String   @default("paper") // paper, brief, commentary, review
+  title       String
+  abstract    String   @db.Text
+  keywords    String?
+  fileUrl     String?
+  status      String   @default("pending") // pending, under_review, accepted, rejected
+  reviewNotes String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}

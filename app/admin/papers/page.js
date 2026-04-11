@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, X, Save, Eye, EyeOff } from 'lucide-react';
 
-const emptyPaper = { title: '', authors: '', journal: '', abstract: '', tags: '', type: 'paper', year: '', doi: '', url: '', published: true };
+const emptyPaper = { title: '', authors: '', journal: '', abstract: '', fullText: '', tags: '', type: 'paper', year: '', doi: '', url: '', published: true };
 
 export default function PapersAdmin() {
   const [papers, setPapers] = useState([]);
@@ -97,6 +97,11 @@ export default function PapersAdmin() {
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Abstract *</label>
                 <textarea rows={4} value={form.abstract} onChange={e => setForm({...form, abstract: e.target.value})} className="w-full border rounded px-3 py-2 text-sm focus:border-accent focus:outline-none" />
+              </div>
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Full Text (renders on paper page)</label>
+                <textarea rows={10} value={form.fullText || ''} onChange={e => setForm({...form, fullText: e.target.value})} className="w-full border rounded px-3 py-2 text-sm focus:border-accent focus:outline-none font-mono" placeholder="Paste the full paper text here. Use ## for section headers. Paragraphs separated by blank lines." />
+                <p className="text-[10px] text-gray-400 mt-1">Use ## Section Title for headers. Separate paragraphs with blank lines. If left empty, readers will see a &quot;Request Full Text&quot; option.</p>
               </div>
               <div className="grid grid-cols-3 gap-4">
                 <div>

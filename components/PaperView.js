@@ -6,7 +6,7 @@ export default function PaperView({ paper, relatedPapers }) {
 
   const citation = `${paper.authors} (${paper.year}). "${paper.title}." ${paper.journal || 'GSSO Journal of International Security Studies'}${paper.doi ? `. DOI: ${paper.doi}` : ''}.`;
 
-  const copycitation = () => {
+  const copyCitation = () => {
     navigator.clipboard.writeText(citation);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

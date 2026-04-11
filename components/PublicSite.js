@@ -101,7 +101,7 @@ export default function PublicSite({ data }) {
 
               {readerPaper.tags&&<div className="mb-8"><h3 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Keywords</h3><div className="flex flex-wrap gap-2">{readerPaper.tags.split(',').map(t=><span key={t} className="font-mono text-[11px] px-3 py-1 bg-[#f2f0eb] border border-[#d5d0c8] rounded text-[#6b6b6b]">{t.trim()}</span>)}</div></div>}
 
-              {readerPaper.fullText?(
+              {readerPaper.url&&readerPaper.url.endsWith(".pdf")?(<div><div className="flex gap-2 mb-4"><a href={readerPaper.url} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-[12px] font-semibold transition">Download PDF</a><a href="/papers-pdf/complete-volume.pdf" target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-4 py-2 rounded text-[12px] font-semibold transition">Complete Volume</a></div><iframe src={readerPaper.url} className="w-full border border-[#d5d0c8] rounded" style={{height:"80vh"}} title={readerPaper.title}/></div>):readerPaper.fullText?(
                 <div className="font-serif leading-[1.9] text-[#3a3a3a] space-y-5" style={{fontSize:readerFontSize+'px'}}>
                   {readerPaper.fullText.split('\n\n').map((para,i)=>{
                     if(para.match(/^#{1,3}\s/)||para.match(/^\d+\.\s/)){const text=para.replace(/^#{1,3}\s*/,'').replace(/^\*\*|\*\*$/g,'');return <h2 key={i} className="font-serif text-xl font-bold text-[#1a1a1a] mt-10 mb-4 pt-6 border-t border-[#e8e4dc]" style={{fontSize:(readerFontSize+4)+'px'}}>{text}</h2>}

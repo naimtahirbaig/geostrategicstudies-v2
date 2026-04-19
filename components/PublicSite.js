@@ -97,7 +97,7 @@ export default function PublicSite({ data }) {
             ))}
             <div className="mt-5 pt-5 border-t border-white/[.06] text-center">
               <div className="font-mono text-[10px] text-white/30 uppercase tracking-wider">ISSN: 2960-0001 (Online)</div>
-              <div className="font-mono text-[10px] text-white/20 mt-1">Peer-Reviewed · Open Access · Double-Blind Review</div>
+              <div className="font-mono text-[10px] text-white/20 mt-1">Working Papers · Open Access · Peer Review from Issue 1 (forthcoming)</div>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@ export default function PublicSite({ data }) {
           <p className="text-[#6b6b6b] max-w-2xl font-light mb-10">{content.about_mission || 'The GSSO is an independent research institution dedicated to producing rigorous, peer-reviewed scholarship in international relations, strategic studies, and peace.'}</p>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              ['01','Peer-Reviewed Research',content.about_research||'We produce independently published, peer-reviewed research across international relations, nuclear strategy, regional security, and emerging threats.'],
+              ['01','Working Papers & Forthcoming Peer-Reviewed Research',content.about_research||'We produce independently published, peer-reviewed research across international relations, nuclear strategy, regional security, and emerging threats.'],
               ['02','Policy Analysis','Strategic briefs and analyses for decision-makers navigating great-power competition, alliance dynamics, arms control, and regional instability.'],
               ['03','Open-Access Journal',content.about_journal||'The GSSO Journal publishes original, peer-reviewed research papers, policy briefs, and strategic commentaries. All submissions undergo double-blind peer review.'],
             ].map(([n,t,d])=>(

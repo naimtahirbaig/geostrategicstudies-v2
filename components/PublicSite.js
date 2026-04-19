@@ -8,6 +8,8 @@ export default function PublicSite({ data }) {
   const [paperForm, setPaperForm] = useState({ authorName: '', authorEmail: '', institution: '', type: 'paper', title: '', abstract: '', keywords: '' });
   const [contactSent, setContactSent] = useState(false);
   const [paperSent, setPaperSent] = useState(false);
+  const [reviewerForm, setReviewerForm] = useState({ name: '', email: '', institution: '', expertise: '', scholar_url: '' });
+  const [reviewerSent, setReviewerSent] = useState(false);
   const [showBtt, setShowBtt] = useState(false);
   const [expandedPaper, setExpandedPaper] = useState(null);
   const [readerPaper, setReaderPaper] = useState(null);
@@ -22,6 +24,8 @@ export default function PublicSite({ data }) {
   const filteredPapers = filter === 'all' ? papers : papers.filter(p => p.type === filter);
   const submitContact = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...contactForm, type: 'contact' }) }); setContactSent(true); };
   const submitPaper = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...paperForm, type: 'paper' }) }); setPaperSent(true); };
+
+  const submitReviewer = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...reviewerForm, type: 'reviewer-registration' }) }); setReviewerSent(true); };
 
   const tickers = ['International Relations','Nuclear Strategy','Geopolitics','Security Studies','Political Science','Peace & Conflict','Defence Analysis','Arms Control','Maritime Security','AI & Statecraft','Climate Security','Non-Proliferation'];
 
@@ -285,6 +289,52 @@ export default function PublicSite({ data }) {
                 <div className="font-mono text-[10px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Founding Director, GSSO</div>
                 <p className="text-sm text-[#6b6b6b] font-light mt-2 leading-relaxed">Ph.D. in International Relations. Founding director of GSSO, with published research on nuclear deterrence, geopolitics, and South Asian security. Author of independently published works available on Amazon, Barnes & Noble, and other platforms.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* PEER REVIEWER POOL */}
+      <section className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Open Registration</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Join Our Peer Reviewer Pool</h2>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">GSSO maintains a register of qualified scholars available for double-blind peer review. Registered reviewers are invited to evaluate manuscripts matching their expertise on a per-submission basis. Active reviewers may be considered for future Advisory Board appointments.</p>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-4">What Reviewers Do</h3>
+              <div className="space-y-3 text-sm text-[#6b6b6b] font-light leading-relaxed">
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">—</span><span>Evaluate 1–3 manuscripts per year (by invitation, not obligation)</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">—</span><span>Provide structured, constructive feedback within 3–4 weeks</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">—</span><span>Maintain confidentiality throughout the review process</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">—</span><span>Decline assignments where a conflict of interest exists</span></div>
+              </div>
+              <h3 className="font-serif text-lg font-bold text-[#1a1a1a] mt-8 mb-4">Who Can Register</h3>
+              <div className="space-y-3 text-sm text-[#6b6b6b] font-light leading-relaxed">
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">•</span><span>Ph.D. holders or advanced doctoral candidates in a relevant discipline</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">•</span><span>Active researchers at recognised universities, think-tanks, or policy institutions</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">•</span><span>At least 2 peer-reviewed publications in your area of expertise</span></div>
+                <div className="flex gap-3"><span className="text-[#b91c1c] shrink-0 mt-0.5">•</span><span>Willingness to complete reviews within the agreed timeframe</span></div>
+              </div>
+              <div className="bg-white border border-[#d5d0c8] rounded p-4 mt-6">
+                <p className="text-[12px] text-[#6b6b6b] font-light"><strong className="text-[#1a1a1a]">Note:</strong> Registration does not guarantee assignment. Reviewers are matched to manuscripts based on subject expertise. All review work is voluntary and conducted in accordance with our <a href="/peer-review-policy" className="text-[#b91c1c] hover:underline">Peer Review Policy</a>.</p>
+              </div>
+            </div>
+            <div className="bg-white border border-[#d5d0c8] rounded p-6">
+              {reviewerSent?(
+                <div className="text-center py-8"><div className="text-3xl mb-3">✓</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a]">Registration Received</h3><p className="text-sm text-[#6b6b6b] mt-2">You have been added to our reviewer pool. We will contact you when a manuscript matching your expertise is received.</p></div>
+              ):(
+                <><h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-1">Reviewer Registration</h3><p className="text-[11px] text-[#999] mb-4">Register your interest and expertise. We will contact you when a relevant manuscript is received.</p>
+                <form onSubmit={submitReviewer} className="space-y-3">
+                  <div><label className="block text-[11px] font-mono uppercase tracking-wider text-[#999] mb-1">Full Name & Title *</label><input required placeholder="e.g. Dr. Jane Smith" value={reviewerForm.name} onChange={e=>setReviewerForm({...reviewerForm,name:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm focus:border-[#b91c1c] outline-none"/></div>
+                  <div><label className="block text-[11px] font-mono uppercase tracking-wider text-[#999] mb-1">Institutional Email *</label><input required type="email" placeholder="jane.smith@university.edu" value={reviewerForm.email} onChange={e=>setReviewerForm({...reviewerForm,email:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm focus:border-[#b91c1c] outline-none"/></div>
+                  <div><label className="block text-[11px] font-mono uppercase tracking-wider text-[#999] mb-1">Institution & Position *</label><input required placeholder="e.g. Postdoc, University of X" value={reviewerForm.institution} onChange={e=>setReviewerForm({...reviewerForm,institution:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm focus:border-[#b91c1c] outline-none"/></div>
+                  <div><label className="block text-[11px] font-mono uppercase tracking-wider text-[#999] mb-1">Areas of Expertise *</label><textarea required rows={3} placeholder="List your research areas, e.g. nuclear deterrence, South Asian security, arms control theory..." value={reviewerForm.expertise} onChange={e=>setReviewerForm({...reviewerForm,expertise:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm focus:border-[#b91c1c] outline-none"/></div>
+                  <div><label className="block text-[11px] font-mono uppercase tracking-wider text-[#999] mb-1">Google Scholar / ORCID / Profile URL</label><input placeholder="https://scholar.google.com/..." value={reviewerForm.scholar_url} onChange={e=>setReviewerForm({...reviewerForm,scholar_url:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm focus:border-[#b91c1c] outline-none"/></div>
+                  <button type="submit" className="w-full bg-[#b91c1c] hover:bg-[#8b1515] text-white py-3 rounded text-sm font-semibold transition">Register as Reviewer →</button>
+                </form></>
+              )}
             </div>
           </div>
         </div>

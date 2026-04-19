@@ -50,7 +50,7 @@ export default function PublicSite({ data }) {
       {/* TOPBAR */}
       <div className="bg-[#0c1220] py-1.5 text-[11px] text-white/50 tracking-wide">
         <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
-          <span>Geo Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
+          <span>Geo-Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
           <div className="space-x-4 hidden md:block">
             <a href="mailto:ceo@geostrategicstudies.org" className="hover:text-white/80 transition">ceo@geostrategicstudies.org</a>
             <a href="#call-for-papers" className="hover:text-white/80 transition">Call for Papers</a>
@@ -63,7 +63,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center">
           <a href="#" className="flex items-center gap-3">
             <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(-25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg>
-            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
+            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo-Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
           </a>
           <div className="hidden lg:flex items-center gap-1">
             {['About','Journal','Policy Briefs','Editorial Board','Resources','Call for Papers','Contact'].map(i=>(
@@ -459,7 +459,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-2 md:col-span-1 max-w-xs">
-              <div className="font-serif text-white/70 font-bold">Geo Strategic Studies</div>
+              <div className="font-serif text-white/70 font-bold">Geo-Strategic Studies</div>
               <div className="font-mono text-[9px] tracking-wider text-white/20 uppercase mt-0.5">Organisation · Independent Think-Tank</div>
               <p className="text-sm mt-3 leading-relaxed">Independent, peer-reviewed research in international relations, strategic studies, and global affairs.</p>
               <div className="font-mono text-[10px] text-white/20 mt-2">ISSN: 2960-0001 (Online)</div>
@@ -486,7 +486,7 @@ export default function PublicSite({ data }) {
             </div>
           </div>
           <div className="border-t border-white/[.06] pt-6 flex justify-between items-center flex-wrap gap-4 text-[11px]">
-            <span>&copy; 2026 Geo Strategic Studies Organisation. All rights reserved.</span>
+            <span>&copy; 2026 Geo-Strategic Studies Organisation. All rights reserved.</span>
             <span className="font-mono text-[10px] text-white/20">GSSO Journal · ISSN: 2960-0001 · Peer-Reviewed · Open Access</span>
           </div>
         </div>

@@ -29,7 +29,7 @@ async function main() {
 
   const meta = {
     journal_issn: '2960-0001',
-    journal_name: 'Journal of Geo Strategic Studies Organisation (JGSSO)',
+    journal_name: 'Journal of Geo-Strategic Studies Organisation (JGSSO)',
     journal_volume: 'Volume 1, Number 11 — April 2026',
     editor_in_chief: 'Prof. Richard N. Haass, President Emeritus, GSSO',
     associate_editor_1: 'Dr. Sarah Mitchell — Technology & Digital Geopolitics',

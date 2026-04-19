@@ -45,7 +45,7 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
-        <p className="text-center text-gray-500 text-xs mt-6">Geo Strategic Studies Organisation © 2026</p>
+        <p className="text-center text-gray-500 text-xs mt-6">Geo-Strategic Studies Organisation © 2026</p>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import './globals.css';
 import { AuthProvider } from '@/components/AuthProvider';
 
 export const metadata = {
-  title: 'Geo Strategic Studies Organisation — Policy · Research · Analysis',
+  title: 'Geo-Strategic Studies Organisation — Policy · Research · Analysis',
   description: 'Independent think-tank and online research journal dedicated to international relations, strategic studies, nuclear deterrence, geopolitics, and peace.',
 };
 

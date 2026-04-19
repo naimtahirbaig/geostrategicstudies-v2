@@ -52,7 +52,7 @@ async function main() {
     { key: 'ceo_name', value: 'Dr. Naim Tahir Baig' },
     { key: 'ceo_role', value: 'CEO & Director of Research, GSSO' },
     { key: 'ceo_bio', value: 'Dr. Naim Tahir Baig is a globally recognised international relations scholar, strategic analyst, and one of the most prolific authors in the field of geopolitical scholarship.' },
-    { key: 'about_mission', value: 'The Geo Strategic Studies Organisation (GSSO) produces original research that bridges the gap between academic rigour and policy relevance.' },
+    { key: 'about_mission', value: 'The Geo-Strategic Studies Organisation (GSSO) produces original research that bridges the gap between academic rigour and policy relevance.' },
   ];
 
   for (const c of content) {

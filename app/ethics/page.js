@@ -94,7 +94,7 @@ export default function EthicsPage() {
           <section>
             <h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">10. Contact</h2>
             <p className="mt-4">For questions regarding publication ethics or any of these policies:</p>
-            <p className="mt-2"><strong>Editorial Office:</strong> ceo@geostrategicstudies.org<br/><strong>Founding Director:</strong> Dr. Naim Tahir Baig<br/><strong>Website:</strong> geostrategicstudies.org</p>
+            <p className="mt-2"><strong>Editorial Office:</strong> editor@geostrategicstudies.org<br/><strong>Founding Director:</strong> Dr. Naim Tahir Baig<br/><strong>Website:</strong> geostrategicstudies.org</p>
           </section>
 
         </div>

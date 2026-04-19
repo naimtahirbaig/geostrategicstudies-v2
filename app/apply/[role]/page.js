@@ -168,8 +168,8 @@ export default function ApplyPage({ params }) {
 
             <div className="bg-[#f2f0eb] border border-[#d5d0c8] rounded p-5 mt-8">
               <h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-2">About GSSO</h3>
-              <p className="text-sm text-[#6b6b6b] font-light leading-relaxed">The Geo-Strategic Studies Organisation is an independent research institution and publisher of the GSSO Journal of International Security Studies (ISSN: 2960-0001). We are building a peer-reviewed, open-access journal that meets international scholarly standards. This is a founding-stage opportunity to shape the editorial direction of a new publication.</p>
-              <p className="text-sm text-[#6b6b6b] font-light leading-relaxed mt-2"><strong className="text-[#1a1a1a]">Contact:</strong> Dr. Naim Tahir Baig, Founding Director — ceo@geostrategicstudies.org</p>
+              <p className="text-sm text-[#6b6b6b] font-light leading-relaxed">The Geo Strategic Studies Organisation is an independent research institution and publisher of the GSSO Journal of International Security Studies (ISSN: 2960-0001). We are building a peer-reviewed, open-access journal that meets international scholarly standards. This is a founding-stage opportunity to shape the editorial direction of a new publication.</p>
+              <p className="text-sm text-[#6b6b6b] font-light leading-relaxed mt-2"><strong className="text-[#1a1a1a]">Contact:</strong> Dr. Naim Tahir Baig, Founding Director — editor@geostrategicstudies.org</p>
               <p className="text-sm text-[#6b6b6b] font-light leading-relaxed mt-1"><strong className="text-[#1a1a1a]">Timeline:</strong> Applications are reviewed on a rolling basis. Shortlisted candidates will be contacted within 2–3 weeks for an informal discussion.</p>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function ApplyPage({ params }) {
       </div>
 
       <footer className="bg-[#080d18] text-white/30 py-8 border-t-[3px] border-[#b91c1c]">
-        <div className="max-w-[960px] mx-auto px-8 text-[11px] text-center">© 2026 Geo-Strategic Studies Organisation. All rights reserved. · ISSN: 2960-0001</div>
+        <div className="max-w-[960px] mx-auto px-8 text-[11px] text-center">© 2026 Geo Strategic Studies Organisation. All rights reserved. · ISSN: 2960-0001</div>
       </footer>
     </div>
   );

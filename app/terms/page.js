@@ -15,7 +15,7 @@ export default function TermsPage() {
           <section><h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">5. Limitation of Liability</h2><p className="mt-4">GSSO provides this website and its content &ldquo;as is&rdquo; without warranties of any kind. GSSO is not liable for any direct, indirect, or consequential damages arising from use of the website or reliance on published content.</p></section>
           <section><h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">6. External Links</h2><p className="mt-4">This website contains links to external resources. GSSO is not responsible for the content, accuracy, or availability of external websites.</p></section>
           <section><h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">7. Changes</h2><p className="mt-4">We reserve the right to modify these terms at any time. Continued use of the website constitutes acceptance of updated terms.</p></section>
-          <section><h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">8. Contact</h2><p className="mt-4">Questions about these terms: ceo@geostrategicstudies.org</p></section>
+          <section><h2 className="font-serif text-2xl font-bold text-[#1a1a1a] border-b-2 border-[#1a1a1a] pb-2">8. Contact</h2><p className="mt-4">Questions about these terms: info@geostrategicstudies.org</p></section>
         </div>
       </div>
       <footer className="bg-[#080d18] text-white/30 py-8 border-t-[3px] border-[#b91c1c]"><div className="max-w-[860px] mx-auto px-8 text-[11px] text-center">&copy; 2026 Geo-Strategic Studies Organisation.</div></footer>

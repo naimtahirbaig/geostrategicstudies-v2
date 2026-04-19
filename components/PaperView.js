@@ -29,7 +29,7 @@ export default function PaperView({ paper, relatedPapers }) {
         <div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center">
           <a href="/" className="flex items-center gap-3">
             <svg width="36" height="36" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg>
-            <div><strong className="font-serif text-base text-[#1a1a1a]">Geo-Strategic Studies</strong><br/><span className="font-mono text-[8px] tracking-[.22em] text-[#b91c1c] uppercase">Journal · Vol. 1, No. 11</span></div>
+            <div><strong className="font-serif text-base text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[8px] tracking-[.22em] text-[#b91c1c] uppercase">Journal · Vol. 1, No. 11</span></div>
           </a>
           <div className="flex items-center gap-3">
             <a href="/#journal" className="text-[13px] font-medium text-[#3a3a3a] px-3 py-2 rounded hover:text-[#b91c1c] hover:bg-red-50 transition">All Papers</a>
@@ -106,7 +106,7 @@ export default function PaperView({ paper, relatedPapers }) {
                 <div className="flex gap-3 justify-center flex-wrap">
                   {paper.url && <a href={paper.url} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">View on ResearchGate →</a>}
                   {paper.doi && <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">View via DOI →</a>}
-                  <a href="mailto:ceo@geostrategicstudies.org?subject=Request Full Text: ${encodeURIComponent(paper.title)}" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a>
+                  <a href="mailto:editor@geostrategicstudies.org?subject=Request Full Text: ${encodeURIComponent(paper.title)}" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a>
                 </div>
               </div>
             )}
@@ -167,7 +167,7 @@ export default function PaperView({ paper, relatedPapers }) {
       {/* FOOTER */}
       <footer className="bg-[#080d18] text-white/30 py-8 border-t-[3px] border-[#b91c1c]">
         <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center flex-wrap gap-4 text-[11px]">
-          <span>© 2026 Geo-Strategic Studies Organisation. All rights reserved.</span>
+          <span>© 2026 Geo Strategic Studies Organisation. All rights reserved.</span>
           <span className="font-mono text-[10px] text-white/20">JGSSO · ISSN: 2960-0001 · Policy · Research · Analysis</span>
         </div>
       </footer>

@@ -50,9 +50,9 @@ export default function PublicSite({ data }) {
       {/* TOPBAR */}
       <div className="bg-[#0c1220] py-1.5 text-[11px] text-white/50 tracking-wide">
         <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
-          <span>Geo-Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
+          <span>Geo Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
           <div className="space-x-4 hidden md:block">
-            <a href="mailto:ceo@geostrategicstudies.org" className="hover:text-white/80 transition">ceo@geostrategicstudies.org</a>
+            <a href="mailto:info@geostrategicstudies.org" className="hover:text-white/80 transition">info@geostrategicstudies.org</a>
             <a href="#call-for-papers" className="hover:text-white/80 transition">Call for Papers</a>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center">
           <a href="#" className="flex items-center gap-3">
             <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(-25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg>
-            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo-Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
+            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
           </a>
           <div className="hidden lg:flex items-center gap-1">
             {['About','Journal','Policy Briefs','Editorial Board','Resources','Call for Papers','Contact'].map(i=>(
@@ -425,7 +425,7 @@ export default function PublicSite({ data }) {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <p className="text-[#6b6b6b] font-light leading-relaxed mb-6">For editorial inquiries, manuscript submissions, board applications, or institutional collaboration.</p>
-              {[['✉','General Enquiries','ceo@geostrategicstudies.org'],['✉','Editorial Office','drnaimtahirbaig@geostrategicstudies.org'],['🌐','Website','geostrategicstudies.org']].map(([i,l,v])=>(
+              {[['✉','General Enquiries','info@geostrategicstudies.org'],['✉','Editorial & Submissions','submissions@geostrategicstudies.org'],['✉','Editor','editor@geostrategicstudies.org'],['🌐','Website','geostrategicstudies.org']].map(([i,l,v])=>(
                 <div key={l} className="flex gap-3 mb-4 items-start">
                   <div className="w-9 h-9 border border-[#d5d0c8] rounded flex items-center justify-center shrink-0 text-sm">{i}</div>
                   <div className="text-[14px] text-[#6b6b6b]"><strong className="text-[#1a1a1a] block">{l}</strong>{v}</div>
@@ -459,7 +459,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-2 md:col-span-1 max-w-xs">
-              <div className="font-serif text-white/70 font-bold">Geo-Strategic Studies</div>
+              <div className="font-serif text-white/70 font-bold">Geo Strategic Studies</div>
               <div className="font-mono text-[9px] tracking-wider text-white/20 uppercase mt-0.5">Organisation · Independent Think-Tank</div>
               <p className="text-sm mt-3 leading-relaxed">Independent research, working papers, and a forthcoming peer-reviewed journal in international relations and strategic studies.</p>
               <div className="font-mono text-[10px] text-white/20 mt-2">ISSN: 2960-0001 (Online)</div>
@@ -483,14 +483,14 @@ export default function PublicSite({ data }) {
             </div>
             <div className="text-sm space-y-2">
               <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Contact</div>
-              <a href="mailto:ceo@geostrategicstudies.org" className="block hover:text-[#a67c37] transition">ceo@geostrategicstudies.org</a>
+              <a href="mailto:info@geostrategicstudies.org" className="block hover:text-[#a67c37] transition">info@geostrategicstudies.org</a>
               <a href="#contact" className="block hover:text-[#a67c37] transition">Contact Form</a>
               <a href="/privacy" className="block hover:text-[#a67c37] transition">Privacy Policy</a>
               <a href="/terms" className="block hover:text-[#a67c37] transition">Terms of Use</a>
             </div>
           </div>
           <div className="border-t border-white/[.06] pt-6 flex justify-between items-center flex-wrap gap-4 text-[11px]">
-            <span>&copy; 2026 Geo-Strategic Studies Organisation. All rights reserved.</span>
+            <span>&copy; 2026 Geo Strategic Studies Organisation. All rights reserved.</span>
             <span className="font-mono text-[10px] text-white/20">GSSO · ISSN: 2960-0001 · Working Papers · Open Access</span>
           </div>
         </div>
@@ -519,7 +519,7 @@ export default function PublicSite({ data }) {
             {readerPaper.url&&readerPaper.url.endsWith('.pdf')?(
               <div><div className="flex gap-2 mb-4"><a href={readerPaper.url} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-[12px] font-semibold transition">Download PDF</a></div><iframe src={readerPaper.url} className="w-full border border-[#d5d0c8] rounded" style={{height:'80vh'}} title={readerPaper.title}/></div>
             ):(
-              <div className="bg-white border border-[#d5d0c8] rounded p-10 text-center"><div className="text-4xl mb-4">📄</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-2">Full Text</h3><p className="text-sm text-[#6b6b6b] mb-6">Contact the editorial office to request the full manuscript.</p><a href="mailto:ceo@geostrategicstudies.org" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a></div>
+              <div className="bg-white border border-[#d5d0c8] rounded p-10 text-center"><div className="text-4xl mb-4">📄</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-2">Full Text</h3><p className="text-sm text-[#6b6b6b] mb-6">Contact the editorial office to request the full manuscript.</p><a href="mailto:editor@geostrategicstudies.org" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a></div>
             )}
             <div className="mt-10 pt-6 border-t border-[#d5d0c8]"><h3 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Cite This Paper</h3><div className="bg-[#f2f0eb] rounded p-4 text-[12px] text-[#3a3a3a] font-mono leading-relaxed">{readerPaper.authors} ({readerPaper.year}). &ldquo;{readerPaper.title}.&rdquo; <em>{readerPaper.journal}</em>{readerPaper.doi&&`. DOI: ${readerPaper.doi}`}.</div></div>
           </div></div>

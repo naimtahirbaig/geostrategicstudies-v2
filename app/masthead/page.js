@@ -26,7 +26,7 @@ export default function MastheadPage() {
               <div className="font-serif text-lg font-bold text-[#1a1a1a]">Dr. Naim Tahir Baig</div>
               <div className="font-mono text-[10px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Founding Director & Managing Editor</div>
               <p className="text-sm text-[#6b6b6b] font-light mt-2">Ph.D. International Relations. Responsible for organisational strategy, operational management, and editorial coordination during the founding phase.</p>
-              <p className="text-[12px] text-[#999] mt-1">Contact: ceo@geostrategicstudies.org</p>
+              <p className="text-[12px] text-[#999] mt-1">Contact: ceo@geostrategicstudies.org · Editorial: editor@geostrategicstudies.org</p>
             </div>
           </div>
         </section>

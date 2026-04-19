@@ -84,7 +84,7 @@ export default function PublicSite({ data }) {
             </div>
           </div>
           <div className="bg-white/[.04] border border-white/[.08] rounded p-6">
-            <div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase">Latest: Vol. 1, Issue 1 (2026)</div>
+            <div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase">Working Paper Series (2026)</div>
             {papers.slice(0,3).map(p=>(
               <div key={p.id} className="py-3 border-t border-white/[.06] first:border-0 first:pt-0">
                 <h4 className="font-serif text-[15px] text-white/90 font-semibold leading-tight">{p.title}</h4>
@@ -134,11 +134,12 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
             <div>
-              <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">GSSO Journal · ISSN: 2960-0001</div>
-              <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2">Vol. 1, Issue 1 (2026)</h2>
+              <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">GSSO Working Paper Series</div>
+              <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2">Working Papers (2026)</h2>
+              <p className="text-[13px] text-[#6b6b6b] font-light mt-1">Pre-print research. These papers have not yet undergone formal peer review. <a href="/peer-review-policy" className="text-[#b91c1c] hover:underline">See our Peer Review Policy →</a></p>
             </div>
             <div className="flex gap-1">
-              {[['all','All'],['paper','Research Papers'],['brief','Policy Briefs']].map(([v,l])=>(
+              {[['all','All'],['working','Working Papers'],['brief','Policy Briefs']].map(([v,l])=>(
                 <button key={v} onClick={()=>setFilter(v)} className={`font-mono text-[11px] tracking-wide px-3 py-2 border rounded transition ${filter===v?'bg-[#1a1a1a] text-white border-[#1a1a1a]':'bg-white text-[#6b6b6b] border-[#d5d0c8] hover:bg-gray-100'}`}>{l}</button>
               ))}
             </div>
@@ -154,7 +155,7 @@ export default function PublicSite({ data }) {
                     {expandedPaper!==p.id&&<p className="text-[13px] text-[#6b6b6b] font-light mt-1 line-clamp-2">{p.abstract}</p>}
                   </div>
                   <div className="font-mono text-[10px] text-[#999]">{p.journal}</div>
-                  <div><span className={`font-mono text-[9px] uppercase px-2 py-1 rounded ${p.type==='paper'?'bg-red-50 text-[#b91c1c]':p.type==='brief'?'bg-green-50 text-green-700':'bg-purple-50 text-purple-700'}`}>{p.type}</span></div>
+                  <div><span className={`font-mono text-[9px] uppercase px-2 py-1 rounded ${p.type==='working'?'bg-amber-50 text-amber-700':p.type==='brief'?'bg-green-50 text-green-700':'bg-red-50 text-[#b91c1c]'}`}>{p.type==='working'?'Working Paper':p.type}</span></div>
                 </div>
                 {expandedPaper===p.id&&(
                   <div className="mt-4 ml-0 md:ml-[96px] bg-white border border-[#d5d0c8] rounded p-6">
@@ -237,7 +238,7 @@ export default function PublicSite({ data }) {
                 <div className="font-serif text-lg font-bold text-[#1a1a1a]">Position Open — Call for Applications</div>
                 <div className="font-mono text-[10px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Editor-in-Chief, GSSO Journal</div>
                 <p className="text-sm text-[#6b6b6b] font-light mt-2 leading-relaxed">We seek an established scholar (Associate Professor or above) with a distinguished publication record in international relations, strategic studies, or a cognate field. The Editor-in-Chief oversees editorial policy, manages the peer review process, and ensures the scholarly integrity of the journal.</p>
-                <a href="mailto:ceo@geostrategicstudies.org?subject=Application: Editor-in-Chief" className="inline-block mt-3 bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-sm font-semibold transition">Apply Now →</a>
+                <a href="/apply/editor-in-chief" className="inline-block mt-3 bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-sm font-semibold transition">View Full Description & Apply →</a>
               </div>
             </div>
           </div>
@@ -254,7 +255,7 @@ export default function PublicSite({ data }) {
                 <div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-2">Open Position</div>
                 <h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold mb-2">{title}</h4>
                 <p className="text-[12px] text-[#6b6b6b] font-light leading-relaxed mb-3">{desc}</p>
-                <p className="text-[11px] text-[#999]">Seeking: Assistant/Associate Professor or Senior Postdoc with relevant peer-reviewed publications.</p>
+                <p className="text-[11px] text-[#999] mb-2">Seeking: Assistant/Associate Professor or Senior Postdoc with relevant peer-reviewed publications.</p><a href="/apply/associate-editor" className="text-[#b91c1c] text-[12px] font-semibold hover:underline">View Full Description & Apply →</a>
               </div>
             ))}
           </div>
@@ -269,7 +270,7 @@ export default function PublicSite({ data }) {
               ))}
             </div>
             <p className="text-[11px] text-[#999] mb-3">Seeking: Assistant Professor, Associate Professor, Senior Postdoc, or Policy Researcher at a recognised institution.</p>
-            <a href="mailto:ceo@geostrategicstudies.org?subject=Expression of Interest: Advisory Board" className="inline-block bg-[#1a1a1a] hover:bg-[#333] text-white px-4 py-2 rounded text-sm font-semibold transition">Express Interest →</a>
+            <a href="/apply/advisory-board" className="inline-block bg-[#1a1a1a] hover:bg-[#333] text-white px-4 py-2 rounded text-sm font-semibold transition">View Description & Apply →</a>
           </div>
 
           {/* Founding Director */}
@@ -307,6 +308,7 @@ export default function PublicSite({ data }) {
                 <p><strong className="text-white">Citation Style:</strong> Chicago Manual of Style (Author-Date system).</p>
                 <p><strong className="text-white">Review Process:</strong> All research papers and policy briefs undergo double-blind peer review. Initial editorial screening: 7–10 days. Full peer review: 6–8 weeks.</p>
                 <p><strong className="text-white">Open Access:</strong> Accepted papers are published open-access on geostrategicstudies.org.</p>
+                <p className="mt-4"><a href="/peer-review-policy" className="text-[#a67c37] hover:underline font-medium">Read our full Peer Review Policy →</a></p>
               </div>
 
               <h3 className="font-serif text-xl font-bold text-white mt-8 mb-4">Topics of Interest</h3>
@@ -418,6 +420,7 @@ export default function PublicSite({ data }) {
               <a href="#policy-briefs" className="block hover:text-[#a67c37] transition">Policy Briefs</a>
               <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Call for Papers</a>
               <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Submission Guidelines</a>
+              <a href="/peer-review-policy" className="block hover:text-[#a67c37] transition">Peer Review Policy</a>
             </div>
             <div className="text-sm space-y-2">
               <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Organisation</div>
@@ -453,7 +456,7 @@ export default function PublicSite({ data }) {
             </div>
           </div>
           <div className="px-8 md:px-16 py-10"><div className="max-w-[680px] mx-auto">
-            <span className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded ${readerPaper.type==='paper'?'bg-red-50 text-[#b91c1c]':'bg-green-50 text-green-700'}`}>{readerPaper.type==='paper'?'Research Paper':'Policy Brief'}</span>
+            <span className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded ${readerPaper.type==='paper'?'bg-red-50 text-[#b91c1c]':'bg-green-50 text-green-700'}`}>{readerPaper.type==='working'?'Working Paper':readerPaper.type==='brief'?'Policy Brief':'Research Paper'}</span>
             <h1 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-4 mb-3 leading-tight">{readerPaper.title}</h1>
             <div className="text-[#b91c1c] font-medium mb-1">{readerPaper.authors}</div>
             <div className="flex flex-wrap gap-3 text-[12px] text-[#999] font-mono mb-8">{readerPaper.journal&&<span>{readerPaper.journal}</span>}{readerPaper.doi&&<span>DOI: {readerPaper.doi}</span>}</div>

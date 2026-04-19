@@ -6,10 +6,8 @@ export default function PublicSite({ data }) {
   const [filter, setFilter] = useState('all');
   const [contactForm, setContactForm] = useState({ name: '', email: '', organisation: '', subject: 'Research Collaboration', message: '' });
   const [paperForm, setPaperForm] = useState({ authorName: '', authorEmail: '', institution: '', type: 'paper', title: '', abstract: '', keywords: '' });
-  const [newsletterEmail, setNewsletterEmail] = useState('');
   const [contactSent, setContactSent] = useState(false);
   const [paperSent, setPaperSent] = useState(false);
-  const [newsletterSent, setNewsletterSent] = useState(false);
   const [showBtt, setShowBtt] = useState(false);
   const [expandedPaper, setExpandedPaper] = useState(null);
   const [readerPaper, setReaderPaper] = useState(null);
@@ -24,114 +22,455 @@ export default function PublicSite({ data }) {
   const filteredPapers = filter === 'all' ? papers : papers.filter(p => p.type === filter);
   const submitContact = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...contactForm, type: 'contact' }) }); setContactSent(true); };
   const submitPaper = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...paperForm, type: 'paper' }) }); setPaperSent(true); };
-  const tickers = ['International Relations','Nuclear Strategy','Geopolitics','Security Studies','Political Science','Peace & Conflict','Defence Analysis','South Asia','Middle East','Arms Control','Maritime Security','AI & Statecraft'];
-  const tanks = [['CSIS','Center for Strategic & International Studies','https://www.csis.org'],['Brookings Institution','Public Policy Research','https://www.brookings.edu'],['RAND Corporation','Global Policy Solutions','https://www.rand.org'],['Chatham House','Royal Institute of International Affairs','https://www.chathamhouse.org'],['IISS','Intl. Institute for Strategic Studies','https://www.iiss.org'],['SIPRI','Stockholm Intl. Peace Research Institute','https://www.sipri.org'],['Council on Foreign Relations','Independent, Nonpartisan','https://www.cfr.org'],['Carnegie Endowment','International Peace','https://carnegieendowment.org'],['Atlantic Council','Shaping the Global Future','https://www.atlanticcouncil.org'],['Wilson Center','Woodrow Wilson Intl. Center','https://www.wilsoncenter.org'],['International Crisis Group','Conflict Prevention','https://www.crisisgroup.org'],['SWP Berlin','German Institute for Security Affairs','https://www.swp-berlin.org/en']];
-  const jrnls = [['JSTOR','Digital Library of Academic Journals','https://www.jstor.org'],['International Security','MIT Press','https://www.mitpressjournals.org/loi/isec'],['Foreign Affairs','Council on Foreign Relations','https://www.foreignaffairs.com'],['Taylor & Francis','IR & Security Journals','https://www.tandfonline.com'],['ResearchGate','Professional Research Network','https://www.researchgate.net'],['Google Scholar','Scholarly Literature Search','https://scholar.google.com'],['ScienceDirect','Elsevier Peer-Reviewed','https://www.sciencedirect.com'],['Intl. Studies Quarterly','Oxford University Press','https://academic.oup.com/isq'],['Journal of Peace Research','SAGE / PRIO','https://journals.sagepub.com/home/jpr']];
-  const orgs = [['United Nations','Intl. Peace & Security','https://www.un.org'],['NATO','North Atlantic Treaty Org.','https://www.nato.int'],['IAEA','Intl. Atomic Energy Agency','https://www.iaea.org'],['ICJ','Intl. Court of Justice','https://www.icj-cij.org'],['Arms Control Association','Non-Proliferation Research','https://www.armscontrol.org'],['Bulletin of Atomic Scientists','Nuclear Threat Assessment','https://thebulletin.org']];
 
-  const GLink = ({items,cols='md:grid-cols-4'}) => (<div className={`grid grid-cols-2 ${cols} border border-[#d5d0c8] mb-8`} style={{gap:'1px',background:'#d5d0c8'}}>{items.map(([n,d,u])=>(<a key={n} href={u} target="_blank" rel="noreferrer" className="bg-white p-4 hover:bg-red-50 transition block no-underline"><h4 className="text-[13px] font-semibold text-[#1a1a1a] mb-0.5">{n}</h4><p className="text-[11px] text-[#6b6b6b] font-light">{d}</p></a>))}</div>);
+  const tickers = ['International Relations','Nuclear Strategy','Geopolitics','Security Studies','Political Science','Peace & Conflict','Defence Analysis','Arms Control','Maritime Security','AI & Statecraft','Climate Security','Non-Proliferation'];
+
+  const resources = [
+    ['JSTOR','Digital Library of Academic Journals','https://www.jstor.org'],
+    ['International Security (MIT Press)','Leading Security Studies Journal','https://www.mitpressjournals.org/loi/isec'],
+    ['Foreign Affairs','International Relations & Policy','https://www.foreignaffairs.com'],
+    ['Google Scholar','Scholarly Literature Search','https://scholar.google.com'],
+    ['ResearchGate','Professional Research Network','https://www.researchgate.net'],
+    ['International Studies Quarterly','Oxford University Press / ISA','https://academic.oup.com/isq'],
+    ['Journal of Peace Research','SAGE / PRIO','https://journals.sagepub.com/home/jpr'],
+    ['ScienceDirect','Elsevier Peer-Reviewed Articles','https://www.sciencedirect.com'],
+    ['Arms Control Association','Non-Proliferation Research','https://www.armscontrol.org'],
+    ['Bulletin of the Atomic Scientists','Nuclear Threat Assessment','https://thebulletin.org'],
+    ['United Nations','International Peace & Security','https://www.un.org'],
+    ['IAEA','International Atomic Energy Agency','https://www.iaea.org'],
+  ];
 
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Libre Franklin', sans-serif", background: '#faf9f6', color: '#3a3a3a' }}>
-      <div className="bg-[#0c1220] py-1.5 text-[11px] text-white/50 tracking-wide"><div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center"><span>Geo Strategic Studies Organisation — Independent Think-Tank & Research Journal</span><div className="space-x-4 hidden md:block"><a href="mailto:ceo@geostrategicstudies.org" className="hover:text-white/80 transition">ceo@geostrategicstudies.org</a><a href="#submissions" className="hover:text-white/80 transition">Submit Paper</a></div></div></div>
 
-      <nav className="sticky top-0 z-50 bg-white border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center"><a href="#" className="flex items-center gap-3"><svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(-25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg><div><strong className="font-serif text-lg text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Est. Think-Tank</span></div></a><div className="hidden lg:flex items-center gap-1">{['About','Journal','Experts','Leadership','Publications','Affiliations','Submissions','Contact'].map(i=>(<a key={i} href={`#${i.toLowerCase()}`} className="text-[13px] font-medium text-[#3a3a3a] px-3 py-2 rounded hover:text-[#b91c1c] hover:bg-red-50 transition">{i}</a>))}</div></div></nav>
+      {/* TOPBAR */}
+      <div className="bg-[#0c1220] py-1.5 text-[11px] text-white/50 tracking-wide">
+        <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
+          <span>Geo Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
+          <div className="space-x-4 hidden md:block">
+            <a href="mailto:ceo@geostrategicstudies.org" className="hover:text-white/80 transition">ceo@geostrategicstudies.org</a>
+            <a href="#call-for-papers" className="hover:text-white/80 transition">Call for Papers</a>
+          </div>
+        </div>
+      </div>
 
-      <section className="bg-[#0c1220] text-white py-20 relative overflow-hidden"><div className="absolute inset-0 opacity-[.03]" style={{backgroundImage:'linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px)',backgroundSize:'40px 40px'}}/><div className="max-w-[1200px] mx-auto px-8 relative z-10 grid md:grid-cols-[1fr_400px] gap-12 items-end"><div><div className="font-mono text-[10px] tracking-[.3em] text-[#a67c37] mb-6 flex items-center gap-3"><span className="w-10 h-px bg-[#a67c37]"/>POLICY · RESEARCH · ANALYSIS</div><h1 className="font-serif text-4xl md:text-5xl font-bold leading-[1.08] mb-6">Advancing <em className="text-[#a67c37] italic">Strategic Scholarship</em> for a World in Flux</h1><p className="text-white/50 text-lg max-w-xl mb-8 font-light leading-relaxed">An independent think-tank and online research journal dedicated to rigorous, policy-relevant scholarship in international relations, strategic studies, nuclear deterrence, geopolitics, and peace.</p><div className="flex gap-3 flex-wrap"><a href="#journal" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-6 py-3 rounded text-sm font-semibold transition">Current Issue →</a><a href="#submissions" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded text-sm font-semibold transition">Submit Research</a></div></div><div className="bg-white/[.04] border border-white/[.08] rounded p-6"><div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase">Latest from the Journal</div>{papers.slice(0,3).map(p=>(<div key={p.id} className="py-3 border-t border-white/[.06] first:border-0 first:pt-0"><h4 className="font-serif text-[15px] text-white/90 font-semibold leading-tight">{p.title}</h4><div className="font-mono text-[11px] text-white/30 mt-1">{p.authors} · {p.year}</div></div>))}<div className="grid grid-cols-4 gap-3 mt-5 pt-5 border-t border-white/[.06]">{[[content.stats_books||'140+','Books'],[content.stats_papers||'35+','Papers'],[content.stats_platforms||'20+','Platforms'],[content.stats_languages||'4','Languages']].map(([n,l])=>(<div key={l} className="text-center"><div className="font-serif text-2xl font-bold text-white">{n}</div><div className="font-mono text-[9px] text-white/30 uppercase tracking-wider mt-1">{l}</div></div>))}</div></div></div></section>
+      {/* NAV */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center">
+          <a href="#" className="flex items-center gap-3">
+            <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(-25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg>
+            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
+          </a>
+          <div className="hidden lg:flex items-center gap-1">
+            {['About','Journal','Policy Briefs','Editorial Board','Resources','Call for Papers','Contact'].map(i=>(
+              <a key={i} href={`#${i.toLowerCase().replace(/ /g,'-')}`} className="text-[13px] font-medium text-[#3a3a3a] px-3 py-2 rounded hover:text-[#b91c1c] hover:bg-red-50 transition">{i}</a>
+            ))}
+          </div>
+        </div>
+      </nav>
 
-      <div className="bg-[#b91c1c] py-2 overflow-hidden whitespace-nowrap"><div className="inline-flex" style={{animation:'scroll 40s linear infinite'}}>{[...tickers,...tickers].map((t,i)=>(<span key={i} className="font-mono text-[11px] tracking-[.08em] uppercase text-white/85 px-8">{t}</span>))}</div><style>{`@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style></div>
-
-      <section id="about" className="py-20 border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">About the Organisation</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Our Mission & Mandate</h2><p className="text-[#6b6b6b] max-w-2xl font-light mb-10">{content.about_mission||'The GSSO produces original research that bridges the gap between academic rigour and policy relevance.'}</p><div className="grid md:grid-cols-3 gap-8">{[['01','Independent Research',content.about_research||'We produce peer-reviewed research across IR, nuclear strategy, regional security, and emerging threats.'],['02','Policy Analysis','Our strategic briefs inform decision-makers navigating great-power competition, alliance dynamics, and regional instability.'],['03','Online Research Journal',content.about_journal||'The GSSO Journal publishes original research papers, book reviews, and policy commentaries.']].map(([n,t,d])=>(<div key={n} className="pt-6 border-t-2 border-[#1a1a1a]"><div className="font-mono text-[11px] text-[#999] mb-3">{n}</div><h3 className="font-serif text-xl text-[#1a1a1a] font-semibold mb-3">{t}</h3><p className="text-sm text-[#6b6b6b] font-light leading-relaxed">{d}</p></div>))}</div></div></section>
-
-      <section className="py-10 bg-[#0c1220]"><div className="max-w-[1200px] mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-6"><div><h3 className="font-serif text-xl font-bold text-white">Strategic Intelligence Briefing</h3><p className="text-white/40 text-sm font-light mt-1">Subscribe for weekly geopolitical analysis and research updates.</p></div>{newsletterSent?(<div className="text-[#a67c37] font-semibold text-sm">✓ Subscribed!</div>):(<div className="flex gap-2"><input type="email" placeholder="your@email.com" value={newsletterEmail} onChange={e=>setNewsletterEmail(e.target.value)} className="bg-white/[.05] border border-white/10 rounded px-4 py-2.5 text-sm text-white w-64 focus:border-[#a67c37] outline-none"/><button onClick={()=>{if(newsletterEmail)setNewsletterSent(true)}} className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition whitespace-nowrap">Subscribe →</button></div>)}</div></section>
-
-      <section id="journal" className="py-20 bg-[#f2f0eb] border-y border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="flex justify-between items-end mb-8 flex-wrap gap-4"><div><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">GSSO Research Journal</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2">Published Research & Analysis</h2></div><div className="flex gap-1">{[['all','All'],['paper','Papers'],['brief','Briefs'],['thesis','Theses']].map(([v,l])=>(<button key={v} onClick={()=>setFilter(v)} className={`font-mono text-[11px] tracking-wide px-3 py-2 border rounded transition ${filter===v?'bg-[#1a1a1a] text-white border-[#1a1a1a]':'bg-white text-[#6b6b6b] border-[#d5d0c8] hover:bg-gray-100'}`}>{l}</button>))}</div></div><div className="divide-y divide-[#e8e4dc]">{filteredPapers.map(p=>(<div key={p.id} className="py-5 hover:bg-red-50/30 transition cursor-pointer" onClick={(e)=>{if(e.target.closest("button")||e.target.closest("a"))return;setExpandedPaper(expandedPaper===p.id?null:p.id)}}><div className="grid md:grid-cols-[80px_1fr_140px_80px] gap-4 items-start"><div className="font-mono text-[11px] text-[#999]">{p.year}</div><div><h4 className="font-serif text-lg text-[#1a1a1a] font-semibold leading-tight">{p.title}</h4><div className="text-[13px] text-[#b91c1c] mt-1">{p.authors}</div>{expandedPaper!==p.id&&<p className="text-[13px] text-[#6b6b6b] font-light mt-1 line-clamp-2">{p.abstract}</p>}</div><div className="font-mono text-[10px] text-[#999]">{p.journal}</div><div><span className={`font-mono text-[9px] uppercase px-2 py-1 rounded ${p.type==='paper'?'bg-red-50 text-[#b91c1c]':p.type==='brief'?'bg-green-50 text-green-700':'bg-purple-50 text-purple-700'}`}>{p.type}</span></div></div>{expandedPaper===p.id&&(<div className="mt-4 ml-0 md:ml-[96px] bg-white border border-[#d5d0c8] rounded p-6"><h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Abstract</h5><p className="text-sm text-[#3a3a3a] leading-relaxed mb-4">{p.abstract}</p>{p.tags&&<div className="mb-4"><h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Keywords</h5><div className="flex flex-wrap gap-1">{p.tags.split(',').map(t=><span key={t} className="font-mono text-[10px] px-2 py-0.5 bg-[#f2f0eb] border border-[#d5d0c8] rounded text-[#6b6b6b]">{t.trim()}</span>)}</div></div>}<div className="flex flex-wrap gap-4 text-[12px] text-[#999] font-mono">{p.journal&&<span>Published in: <strong className="text-[#1a1a1a]">{p.journal}</strong></span>}{p.doi&&<span>DOI: <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noreferrer" className="text-[#b91c1c] hover:underline">{p.doi}</a></span>}</div><div className="mt-4 pt-4 border-t border-[#e8e4dc]"><h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Cite This Paper</h5><div className="bg-[#f2f0eb] rounded p-3 text-[12px] text-[#3a3a3a] font-mono leading-relaxed">{p.authors} ({p.year}). &ldquo;{p.title}.&rdquo; {p.journal&&<em>{p.journal}</em>}.</div></div><div className="flex gap-2 mt-3"><button onClick={(e)=>{e.stopPropagation();setReaderPaper(p)}} className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-sm font-semibold transition">Read Full Paper →</button></div></div>)}</div>))}</div></div></section>
-
-      <section className="py-20 border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Research Domains</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Areas of Expertise</h2><div className="grid grid-cols-2 md:grid-cols-4 border border-[#d5d0c8]" style={{gap:'1px',background:'#d5d0c8'}}>{[['🌐','International Relations','State behaviour, alliance dynamics, and the rules-based order.'],['⚛️','Nuclear Strategy','Deterrence stability, non-proliferation, and weapons in space.'],['🗺️','Geopolitics','Great-power competition, maritime chokepoints, and resource geopolitics.'],['🛡️','Security & Defence','Security architectures, military strategy, and asymmetric warfare.'],['🏛️','Political Science','Comparative politics, populism, governance, and statecraft.'],['🕊️','Peace & Conflict','Conflict dynamics, post-conflict reconstruction, and humanitarian law.'],['🤖','Technology & Statecraft','AI in warfare, cyber operations, and digital sovereignty.'],['🌍','Regional Studies','South Asia, the Middle East, the Indo-Pacific, and the Islamic world.']].map(([i,t,d])=>(<div key={t} className="bg-white p-6 hover:bg-red-50 transition"><div className="text-2xl mb-3">{i}</div><h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold mb-2">{t}</h4><p className="text-[12px] text-[#6b6b6b] font-light leading-relaxed">{d}</p></div>))}</div></div></section>
-
-      <section id="experts" className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Our Team</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Experts & Editorial Board</h2><p className="text-[#6b6b6b] max-w-2xl font-light mb-8">Advisory structure drawn from scholars and practitioners across international relations, strategic studies, and public policy.</p><div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4"><div className="bg-white border border-[#d5d0c8] p-6 text-center hover:border-[#b91c1c] transition"><div className="w-20 h-20 rounded-full border-2 border-[#a67c37] mx-auto mb-3 overflow-hidden"><img src="/ceo-photo.png" alt="Dr. Naim Tahir Baig" className="w-full h-full object-cover"/></div><h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold">Dr. Naim Tahir Baig</h4><div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Editor-in-Chief & CEO</div><p className="text-[11px] text-[#6b6b6b] mt-2 font-light">Ph.D. International Relations. 140+ books, 35+ research papers.</p></div>{[['Research Advisory Council','Strategic Guidance','Scholars and practitioners providing peer review and editorial oversight.'],['Peer Review Panel','Academic Quality','Double-blind peer review ensuring methodological rigour and policy relevance.'],['External Contributors','Global Network','Submissions welcomed from researchers worldwide across all core domains.']].map(([t,r,d])=>(<div key={t} className="bg-white border border-[#d5d0c8] p-6 hover:border-[#b91c1c] transition"><h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold mb-1">{t}</h4><div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider">{r}</div><p className="text-[11px] text-[#6b6b6b] mt-2 font-light leading-relaxed">{d}</p></div>))}</div></div></section>
-
-      <section id="leadership" className="py-20 bg-[#0c1220] text-white"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#a67c37] uppercase">Leadership</div><h2 className="font-serif text-3xl font-bold text-white mt-2 mb-8">Chief Executive Officer</h2><div className="grid md:grid-cols-[320px_1fr] gap-12"><div className="text-center"><div className="w-44 h-44 rounded-full border-[3px] border-[#a67c37] mx-auto mb-5 overflow-hidden"><img src="/ceo-photo.png" alt="CEO" className="w-full h-full object-cover"/></div><div className="font-serif text-xl font-bold">{content.ceo_name||'Dr. Naim Tahir Baig'}</div><div className="font-mono text-[10px] tracking-[.2em] text-[#a67c37] uppercase mt-1">{content.ceo_role||'CEO & Director of Research'}</div><div className="text-[13px] text-white/40 mt-3 leading-relaxed">Ph.D. International Relations<br/>M.Phil International Relations<br/>PG Diploma TEFL</div><div className="flex flex-wrap gap-2 justify-center mt-4">{[['Website','https://www.naimtahirbaig.com'],['ResearchGate','https://www.researchgate.net/profile/Naim-Tahir-Baig'],['Amazon','https://www.amazon.com/s?k=naim+tahir+baig'],['Barnes & Noble','https://www.barnesandnoble.com/s/dr%20naim%20tahir%20baig'],['Everand','https://www.everand.com/search?query=dr%20naim%20tahir%20baig']].map(([l,u])=>(<a key={l} href={u} target="_blank" rel="noreferrer" className="text-[11px] px-3 py-1.5 border border-white/15 rounded text-white/50 hover:border-[#a67c37] hover:text-[#a67c37] transition">{l}</a>))}</div></div><div><p className="text-white/50 font-light leading-relaxed mb-4">{content.ceo_bio||'Dr. Naim Tahir Baig is a globally recognised international relations scholar and strategic analyst.'}</p><blockquote className="border-l-[3px] border-[#a67c37] pl-5 my-6 font-serif text-lg italic text-white/60">&ldquo;{content.ceo_quote||'Writing is the bridge between scholarship and society.'}&rdquo;</blockquote><div className="grid grid-cols-4 gap-4 p-5 bg-white/[.03] border border-white/[.06] rounded mt-6">{[[content.stats_books||'140+','Books'],[content.stats_papers||'35+','Papers'],[content.stats_platforms||'20+','Platforms'],['16','Months / 139 Books']].map(([n,l])=>(<div key={l} className="text-center"><div className="font-serif text-xl font-bold text-[#a67c37]">{n}</div><div className="font-mono text-[9px] text-white/30 uppercase tracking-wider mt-1">{l}</div></div>))}</div></div></div></div></section>
-
-      <section id="publications" className="py-20 border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Book Publications</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Featured from {content.stats_books||'140+'} Published Works</h2><div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">{books.map(b=>(<a key={b.id} href={b.amazonUrl||'#'} target="_blank" rel="noreferrer" className="border border-[#d5d0c8] bg-white rounded overflow-hidden hover:shadow-lg hover:-translate-y-1 transition"><div className="h-56 bg-cover bg-center" style={b.coverImage?{backgroundImage:`url(${b.coverImage})`}:{background:'linear-gradient(135deg,#1a1a2e,#16213e)'}}>{!b.coverImage&&<div className="h-full flex items-center justify-center p-4 text-center"><span className="font-serif text-sm text-white font-semibold">{b.title}</span></div>}</div><div className="p-3"><div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider">{b.category}</div><div className="font-serif text-sm font-semibold text-[#1a1a1a] mt-0.5 truncate">{b.title}</div><div className="text-[11px] text-[#6b6b6b] mt-0.5 truncate">{b.description}</div></div></a>))}</div><div className="flex gap-3 justify-center flex-wrap mt-8"><a href="https://www.amazon.com/s?k=naim+tahir+baig" target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">Browse on Amazon →</a><a href="https://www.barnesandnoble.com/s/dr%20naim%20tahir%20baig" target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Barnes & Noble →</a><a href="https://www.everand.com/search?query=dr%20naim%20tahir%20baig" target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Everand →</a><a href="https://www.naimtahirbaig.com" target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Full Catalog →</a></div></div></section>
-
-      {blogPosts.length>0&&(<section className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Latest</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">News & Commentary</h2><div className="grid md:grid-cols-3 gap-6">{blogPosts.map(p=>(<article key={p.id} className="bg-white border border-[#d5d0c8] rounded overflow-hidden hover:shadow-md transition"><div className="p-5"><div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-2">{p.category||'Commentary'}</div><h3 className="font-serif text-lg font-bold text-[#1a1a1a] leading-tight mb-2">{p.title}</h3><p className="text-sm text-[#6b6b6b] font-light line-clamp-3">{p.excerpt||p.content?.substring(0,150)}</p><div className="flex justify-between items-center mt-4 pt-3 border-t border-[#e8e4dc]"><span className="text-[11px] text-[#999]">{p.author}</span><span className="font-mono text-[10px] text-[#999]">{new Date(p.createdAt).toLocaleDateString()}</span></div></div></article>))}</div></div></section>)}
-
-      <section className="py-20 border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Upcoming</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Events & Conferences</h2><div className="grid md:grid-cols-3 gap-6">{[['Webinar Series','Monthly Strategic Briefings','Expert analysis on emerging geopolitical developments and nuclear strategy updates.','Ongoing · Monthly'],['Annual Conference','GSSO International Security Forum','Annual gathering of scholars, policymakers, and practitioners on international security.','2026 · Coming Soon'],['Research Workshops','Peer Review & Methodology','Invitation-only workshops for working papers and peer feedback.','By Invitation']].map(([t,s,d,dt])=>(<div key={t} className="bg-white border border-[#d5d0c8] rounded p-6 hover:border-[#b91c1c] transition"><div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-3">{dt}</div><h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-1">{t}</h3><div className="text-[13px] text-[#6b6b6b] font-medium mb-2">{s}</div><p className="text-[12px] text-[#999] font-light leading-relaxed">{d}</p></div>))}</div></div></section>
-
-      <section id="affiliations" className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Global Network</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">International Think-Tanks & Research Journals</h2><p className="text-[#6b6b6b] max-w-2xl font-light mb-8">GSSO engages with leading institutions, journals, and research networks worldwide.</p><h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Leading Think-Tanks</h3><GLink items={tanks}/><h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Academic Journals & Databases</h3><GLink items={jrnls} cols="md:grid-cols-3"/><h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">International Organisations</h3><GLink items={orgs} cols="md:grid-cols-3"/></div></section>
-
-      <section id="submissions" className="py-20 border-b border-[#d5d0c8]"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">For Authors</div><h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Submit Your Research</h2><div className="grid md:grid-cols-2 gap-12"><div className="text-sm text-[#6b6b6b] font-light leading-relaxed space-y-4"><p>The GSSO Journal welcomes original research from scholars, analysts, and practitioners worldwide.</p><p><strong className="text-[#1a1a1a]">Scope:</strong> International Relations, Nuclear Strategy, Geopolitics, Security Studies, Political Science, Peace & Conflict, Technology & Statecraft, Regional Studies.</p><p><strong className="text-[#1a1a1a]">Requirements:</strong> Research papers: 5,000–12,000 words. Policy briefs: 2,000–4,000 words. Include abstract, keywords, bibliography. Chicago citation style.</p><p><strong className="text-[#1a1a1a]">Review:</strong> Double-blind peer review. Screening: 7–10 days. Full review: 6–8 weeks.</p><p><strong className="text-[#1a1a1a]">Open Access:</strong> Accepted papers published open-access and indexed on ResearchGate and Google Scholar.</p></div><div className="bg-[#f2f0eb] border border-[#d5d0c8] rounded p-6">{paperSent?(<div className="text-center py-8"><div className="text-3xl mb-3">✓</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a]">Submission Received</h3><p className="text-sm text-[#6b6b6b] mt-2">Editorial team will respond within 7–10 days.</p></div>):(<><h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-4">Submit Manuscript</h3><form onSubmit={submitPaper} className="space-y-3"><div className="grid grid-cols-2 gap-3"><input required placeholder="Full Name" value={paperForm.authorName} onChange={e=>setPaperForm({...paperForm,authorName:e.target.value})} className="border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/><input required type="email" placeholder="Email" value={paperForm.authorEmail} onChange={e=>setPaperForm({...paperForm,authorEmail:e.target.value})} className="border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/></div><input placeholder="Institution" value={paperForm.institution} onChange={e=>setPaperForm({...paperForm,institution:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/><input required placeholder="Paper Title" value={paperForm.title} onChange={e=>setPaperForm({...paperForm,title:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/><textarea required rows={4} placeholder="Abstract (200–300 words)" value={paperForm.abstract} onChange={e=>setPaperForm({...paperForm,abstract:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/><input placeholder="Keywords (comma separated)" value={paperForm.keywords} onChange={e=>setPaperForm({...paperForm,keywords:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2 text-sm bg-white focus:border-[#b91c1c] outline-none"/><button type="submit" className="w-full bg-[#b91c1c] hover:bg-[#8b1515] text-white py-3 rounded text-sm font-semibold transition">Submit for Review →</button></form></>)}</div></div></div></section>
-
-      <section id="contact" className="py-20 bg-[#0c1220] text-white"><div className="max-w-[1200px] mx-auto px-8"><div className="font-mono text-[11px] tracking-[.2em] text-[#a67c37] uppercase">Contact</div><h2 className="font-serif text-3xl font-bold text-white mt-2 mb-8">Get In Touch</h2><div className="grid md:grid-cols-2 gap-12"><div><p className="text-white/50 font-light leading-relaxed mb-6">For research collaboration, media inquiries, speaking engagements, or policy consultations.</p>{[['✉','CEO Office',content.contact_email_1||'ceo@geostrategicstudies.org'],['✉','Direct',content.contact_email_2||'drnaimtahirbaig@geostrategicstudies.org'],['📱','WhatsApp',content.contact_phone||'+92 341 700 7400']].map(([i,l,v])=>(<div key={l} className="flex gap-3 mb-4 items-start"><div className="w-9 h-9 border border-white/10 rounded flex items-center justify-center shrink-0 text-sm">{i}</div><div className="text-[14px] text-white/50"><strong className="text-white block">{l}</strong>{v}</div></div>))}<div className="flex flex-wrap gap-2 mt-6">{[['ResearchGate','https://www.researchgate.net/profile/Naim-Tahir-Baig'],['Official Site','https://www.naimtahirbaig.com'],['Amazon','https://www.amazon.com/s?k=naim+tahir+baig'],['Barnes & Noble','https://www.barnesandnoble.com/s/dr%20naim%20tahir%20baig'],['Everand','https://www.everand.com/search?query=dr%20naim%20tahir%20baig']].map(([l,u])=>(<a key={l} href={u} target="_blank" rel="noreferrer" className="text-[11px] px-3 py-1.5 border border-white/15 rounded text-white/50 hover:border-[#a67c37] hover:text-[#a67c37] transition">{l}</a>))}</div></div><div>{contactSent?(<div className="text-center py-12"><div className="text-3xl mb-3">✓</div><h3 className="font-serif text-xl font-bold">Message Sent</h3><p className="text-white/50 text-sm mt-2">We will respond within 48 hours.</p></div>):(<form onSubmit={submitContact} className="space-y-3"><div className="grid grid-cols-2 gap-3"><input required placeholder="Full Name" value={contactForm.name} onChange={e=>setContactForm({...contactForm,name:e.target.value})} className="bg-white/[.04] border border-white/10 rounded px-3 py-2.5 text-sm text-white focus:border-[#a67c37] outline-none"/><input required type="email" placeholder="Email" value={contactForm.email} onChange={e=>setContactForm({...contactForm,email:e.target.value})} className="bg-white/[.04] border border-white/10 rounded px-3 py-2.5 text-sm text-white focus:border-[#a67c37] outline-none"/></div><input placeholder="Organisation" value={contactForm.organisation} onChange={e=>setContactForm({...contactForm,organisation:e.target.value})} className="w-full bg-white/[.04] border border-white/10 rounded px-3 py-2.5 text-sm text-white focus:border-[#a67c37] outline-none"/><select value={contactForm.subject} onChange={e=>setContactForm({...contactForm,subject:e.target.value})} className="w-full bg-white/[.04] border border-white/10 rounded px-3 py-2.5 text-sm text-white focus:border-[#a67c37] outline-none">{['Research Collaboration','Media Inquiry','Speaking Engagement','Academic Partnership','Policy Consultation','General Inquiry'].map(o=><option key={o} value={o} className="bg-[#0c1220]">{o}</option>)}</select><textarea required rows={4} placeholder="Your message..." value={contactForm.message} onChange={e=>setContactForm({...contactForm,message:e.target.value})} className="w-full bg-white/[.04] border border-white/10 rounded px-3 py-2.5 text-sm text-white focus:border-[#a67c37] outline-none"/><button type="submit" className="w-full bg-[#b91c1c] hover:bg-[#8b1515] text-white py-3 rounded text-sm font-semibold transition">Send Message →</button></form>)}</div></div></div></section>
-
-      <footer className="bg-[#080d18] text-white/30 py-12 border-t-[3px] border-[#b91c1c]"><div className="max-w-[1200px] mx-auto px-8"><div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8"><div className="col-span-2 md:col-span-1 max-w-xs"><div className="font-serif text-white/70 font-bold">Geo Strategic Studies</div><div className="font-mono text-[9px] tracking-wider text-white/20 uppercase mt-0.5">Organisation · Think-Tank & Journal</div><p className="text-sm mt-3 leading-relaxed">Independent research advancing strategic thought in international relations, security studies, and global affairs.</p></div><div className="text-sm space-y-2"><div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Research</div><a href="#journal" className="block hover:text-[#a67c37] transition">Journal Archive</a><a href="#publications" className="block hover:text-[#a67c37] transition">Published Books</a><a href="#submissions" className="block hover:text-[#a67c37] transition">Submit Paper</a></div><div className="text-sm space-y-2"><div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Organisation</div><a href="#about" className="block hover:text-[#a67c37] transition">About GSSO</a><a href="#leadership" className="block hover:text-[#a67c37] transition">Leadership</a><a href="#experts" className="block hover:text-[#a67c37] transition">Editorial Board</a><a href="#affiliations" className="block hover:text-[#a67c37] transition">Affiliations</a></div><div className="text-sm space-y-2"><div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Connect</div><a href="mailto:ceo@geostrategicstudies.org" className="block hover:text-[#a67c37] transition">ceo@geostrategicstudies.org</a><a href="https://www.naimtahirbaig.com" target="_blank" rel="noreferrer" className="block hover:text-[#a67c37] transition">naimtahirbaig.com</a><a href="https://www.researchgate.net/profile/Naim-Tahir-Baig" target="_blank" rel="noreferrer" className="block hover:text-[#a67c37] transition">ResearchGate</a><a href="https://www.amazon.com/s?k=naim+tahir+baig" target="_blank" rel="noreferrer" className="block hover:text-[#a67c37] transition">Amazon Author</a></div></div><div className="border-t border-white/[.06] pt-6 flex justify-between items-center flex-wrap gap-4 text-[11px]"><span>© 2026 Geo Strategic Studies Organisation. All rights reserved.</span><span className="font-mono text-[10px] text-white/20">GSSO Journal of International Security Studies · Policy · Research · Analysis</span></div></div></footer>
-
-      
-      {/* READING PANEL */}
-      {readerPaper&&(<div className="fixed inset-0 z-[100] flex">
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={()=>setReaderPaper(null)}/>
-        <div className="relative ml-auto w-full max-w-[900px] bg-[#faf9f6] h-full overflow-y-auto shadow-2xl animate-[slideIn_.3s_ease]">
-          <style>{`@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}`}</style>
-          {/* Reader Header */}
-          <div className="sticky top-0 z-10 bg-[#0c1220] text-white px-8 py-4 flex justify-between items-center">
-            <div className="flex-1 min-w-0">
-              <div className="font-mono text-[9px] tracking-wider text-[#a67c37] uppercase">JGSSO · ISSN: 2960-0001</div>
-              <div className="font-serif text-sm font-semibold truncate mt-0.5">{readerPaper.title}</div>
-            </div>
-            <div className="flex items-center gap-3 ml-4 shrink-0">
-              <button onClick={()=>setReaderFontSize(s=>Math.max(12,s-2))} className="w-8 h-8 rounded bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition">A-</button>
-              <button onClick={()=>setReaderFontSize(s=>Math.min(24,s+2))} className="w-8 h-8 rounded bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition">A+</button>
-              <a href={`/papers/${readerPaper.id}`} target="_blank" rel="noreferrer" className="text-[11px] px-3 py-1.5 border border-white/20 rounded text-white/60 hover:text-white hover:border-white/40 transition hidden md:block">Open Full Page</a>
-              <button onClick={()=>setReaderPaper(null)} className="w-8 h-8 rounded bg-white/10 hover:bg-red-500/30 text-white flex items-center justify-center text-lg transition">×</button>
+      {/* HERO */}
+      <section className="bg-[#0c1220] text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[.03]" style={{backgroundImage:'linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px)',backgroundSize:'40px 40px'}}/>
+        <div className="max-w-[1200px] mx-auto px-8 relative z-10 grid md:grid-cols-[1fr_400px] gap-12 items-end">
+          <div>
+            <div className="font-mono text-[10px] tracking-[.3em] text-[#a67c37] mb-6 flex items-center gap-3"><span className="w-10 h-px bg-[#a67c37]"/>POLICY · RESEARCH · ANALYSIS</div>
+            <h1 className="font-serif text-4xl md:text-5xl font-bold leading-[1.08] mb-6">Independent <em className="text-[#a67c37] italic">Strategic Research</em> for a Complex World</h1>
+            <p className="text-white/50 text-lg max-w-xl mb-8 font-light leading-relaxed">A peer-reviewed research journal and policy institute dedicated to rigorous scholarship in international relations, strategic studies, nuclear deterrence, geopolitics, and peace.</p>
+            <div className="flex gap-3 flex-wrap">
+              <a href="#journal" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-6 py-3 rounded text-sm font-semibold transition">Current Issue →</a>
+              <a href="#call-for-papers" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded text-sm font-semibold transition">Submit Research</a>
+              <a href="#editorial-board" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded text-sm font-semibold transition">Join Our Team</a>
             </div>
           </div>
-          {/* Reader Content */}
-          <div className="px-8 md:px-16 py-10">
-            <div className="max-w-[680px] mx-auto">
-              <span className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded ${readerPaper.type==='paper'?'bg-red-50 text-[#b91c1c]':readerPaper.type==='brief'?'bg-green-50 text-green-700':'bg-purple-50 text-purple-700'}`}>{readerPaper.type==='paper'?'Research Paper':readerPaper.type==='brief'?'Policy Brief':'Thesis'}</span>
-              <h1 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-4 mb-3 leading-tight">{readerPaper.title}</h1>
-              <div className="text-[#b91c1c] font-medium mb-1">{readerPaper.authors}</div>
-              <div className="flex flex-wrap gap-3 text-[12px] text-[#999] font-mono mb-8">{readerPaper.journal&&<span>{readerPaper.journal}</span>}{readerPaper.doi&&<span>DOI: {readerPaper.doi}</span>}{readerPaper.year&&<span>{readerPaper.year}</span>}</div>
-              
-              <div className="bg-[#f2f0eb] border border-[#d5d0c8] rounded p-6 mb-8">
-                <h2 className="font-mono text-[10px] uppercase tracking-wider text-[#b91c1c] mb-2">Abstract</h2>
-                <p style={{fontSize:readerFontSize+'px'}} className="text-[#3a3a3a] leading-relaxed font-serif">{readerPaper.abstract}</p>
+          <div className="bg-white/[.04] border border-white/[.08] rounded p-6">
+            <div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase">Latest: Vol. 1, Issue 1 (2026)</div>
+            {papers.slice(0,3).map(p=>(
+              <div key={p.id} className="py-3 border-t border-white/[.06] first:border-0 first:pt-0">
+                <h4 className="font-serif text-[15px] text-white/90 font-semibold leading-tight">{p.title}</h4>
+                <div className="font-mono text-[11px] text-white/30 mt-1">{p.authors}</div>
               </div>
+            ))}
+            <div className="mt-5 pt-5 border-t border-white/[.06] text-center">
+              <div className="font-mono text-[10px] text-white/30 uppercase tracking-wider">ISSN: 2960-0001 (Online)</div>
+              <div className="font-mono text-[10px] text-white/20 mt-1">Peer-Reviewed · Open Access · Double-Blind Review</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              {readerPaper.tags&&<div className="mb-8"><h3 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Keywords</h3><div className="flex flex-wrap gap-2">{readerPaper.tags.split(',').map(t=><span key={t} className="font-mono text-[11px] px-3 py-1 bg-[#f2f0eb] border border-[#d5d0c8] rounded text-[#6b6b6b]">{t.trim()}</span>)}</div></div>}
+      {/* TICKER */}
+      <div className="bg-[#b91c1c] py-2 overflow-hidden whitespace-nowrap">
+        <div className="inline-flex" style={{animation:'scroll 40s linear infinite'}}>
+          {[...tickers,...tickers].map((t,i)=>(<span key={i} className="font-mono text-[11px] tracking-[.08em] uppercase text-white/85 px-8">{t}</span>))}
+        </div>
+        <style>{`@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
+      </div>
 
-              {readerPaper.url&&readerPaper.url.endsWith(".pdf")?(<div><div className="flex gap-2 mb-4"><a href={readerPaper.url} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-[12px] font-semibold transition">Download PDF</a><a href="/papers-pdf/complete-volume.pdf" target="_blank" rel="noreferrer" className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-4 py-2 rounded text-[12px] font-semibold transition">Complete Volume</a></div><iframe src={readerPaper.url} className="w-full border border-[#d5d0c8] rounded" style={{height:"80vh"}} title={readerPaper.title}/></div>):readerPaper.fullText?(
-                <div className="font-serif leading-[1.9] text-[#3a3a3a] space-y-5" style={{fontSize:readerFontSize+'px'}}>
-                  {readerPaper.fullText.split('\n\n').map((para,i)=>{
-                    if(para.match(/^#{1,3}\s/)||para.match(/^\d+\.\s/)){const text=para.replace(/^#{1,3}\s*/,'').replace(/^\*\*|\*\*$/g,'');return <h2 key={i} className="font-serif text-xl font-bold text-[#1a1a1a] mt-10 mb-4 pt-6 border-t border-[#e8e4dc]" style={{fontSize:(readerFontSize+4)+'px'}}>{text}</h2>}
-                    if(para.match(/^>\s/)){return <blockquote key={i} className="border-l-3 border-[#b91c1c] pl-5 italic text-[#6b6b6b] my-6">{para.replace(/^>\s*/,'')}</blockquote>}
-                    return <p key={i}>{para}</p>
-                  })}
-                </div>
-              ):(
-                <div className="bg-white border border-[#d5d0c8] rounded p-10 text-center">
-                  <div className="text-4xl mb-4">📄</div>
-                  <h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-2">Full Text Available Soon</h3>
-                  <p className="text-sm text-[#6b6b6b] mb-6 max-w-md mx-auto">The complete paper is published in JGSSO Volume 1, Number 11 (April 2026). You can read the abstract above or request the full text.</p>
-                  <div className="flex gap-3 justify-center flex-wrap">
-                    {readerPaper.doi&&<a href={`https://doi.org/${readerPaper.doi}`} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">View via DOI →</a>}
-                    <a href={`mailto:ceo@geostrategicstudies.org?subject=Request Full Text: ${readerPaper.title}`} className="border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a>
+      {/* ABOUT */}
+      <section id="about" className="py-20 border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">About the Organisation</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Mission & Mandate</h2>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-10">{content.about_mission || 'The GSSO is an independent research institution dedicated to producing rigorous, peer-reviewed scholarship in international relations, strategic studies, and peace.'}</p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              ['01','Peer-Reviewed Research',content.about_research||'We produce independently published, peer-reviewed research across international relations, nuclear strategy, regional security, and emerging threats.'],
+              ['02','Policy Analysis','Strategic briefs and analyses for decision-makers navigating great-power competition, alliance dynamics, arms control, and regional instability.'],
+              ['03','Open-Access Journal',content.about_journal||'The GSSO Journal publishes original, peer-reviewed research papers, policy briefs, and strategic commentaries. All submissions undergo double-blind peer review.'],
+            ].map(([n,t,d])=>(
+              <div key={n} className="pt-6 border-t-2 border-[#1a1a1a]">
+                <div className="font-mono text-[11px] text-[#999] mb-3">{n}</div>
+                <h3 className="font-serif text-xl text-[#1a1a1a] font-semibold mb-3">{t}</h3>
+                <p className="text-sm text-[#6b6b6b] font-light leading-relaxed">{d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* JOURNAL */}
+      <section id="journal" className="py-20 bg-[#f2f0eb] border-y border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
+            <div>
+              <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">GSSO Journal · ISSN: 2960-0001</div>
+              <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2">Vol. 1, Issue 1 (2026)</h2>
+            </div>
+            <div className="flex gap-1">
+              {[['all','All'],['paper','Research Papers'],['brief','Policy Briefs']].map(([v,l])=>(
+                <button key={v} onClick={()=>setFilter(v)} className={`font-mono text-[11px] tracking-wide px-3 py-2 border rounded transition ${filter===v?'bg-[#1a1a1a] text-white border-[#1a1a1a]':'bg-white text-[#6b6b6b] border-[#d5d0c8] hover:bg-gray-100'}`}>{l}</button>
+              ))}
+            </div>
+          </div>
+          <div className="divide-y divide-[#e8e4dc]">
+            {filteredPapers.map(p=>(
+              <div key={p.id} className="py-5 hover:bg-red-50/30 transition cursor-pointer" onClick={(e)=>{if(e.target.closest("button")||e.target.closest("a"))return;setExpandedPaper(expandedPaper===p.id?null:p.id)}}>
+                <div className="grid md:grid-cols-[80px_1fr_160px_80px] gap-4 items-start">
+                  <div className="font-mono text-[11px] text-[#999]">{p.year}</div>
+                  <div>
+                    <h4 className="font-serif text-lg text-[#1a1a1a] font-semibold leading-tight">{p.title}</h4>
+                    <div className="text-[13px] text-[#b91c1c] mt-1">{p.authors}</div>
+                    {expandedPaper!==p.id&&<p className="text-[13px] text-[#6b6b6b] font-light mt-1 line-clamp-2">{p.abstract}</p>}
                   </div>
+                  <div className="font-mono text-[10px] text-[#999]">{p.journal}</div>
+                  <div><span className={`font-mono text-[9px] uppercase px-2 py-1 rounded ${p.type==='paper'?'bg-red-50 text-[#b91c1c]':p.type==='brief'?'bg-green-50 text-green-700':'bg-purple-50 text-purple-700'}`}>{p.type}</span></div>
                 </div>
-              )}
+                {expandedPaper===p.id&&(
+                  <div className="mt-4 ml-0 md:ml-[96px] bg-white border border-[#d5d0c8] rounded p-6">
+                    <h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Abstract</h5>
+                    <p className="text-sm text-[#3a3a3a] leading-relaxed mb-4">{p.abstract}</p>
+                    {p.tags&&<div className="mb-4"><h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Keywords</h5><div className="flex flex-wrap gap-1">{p.tags.split(',').map(t=><span key={t} className="font-mono text-[10px] px-2 py-0.5 bg-[#f2f0eb] border border-[#d5d0c8] rounded text-[#6b6b6b]">{t.trim()}</span>)}</div></div>}
+                    <div className="flex flex-wrap gap-4 text-[12px] text-[#999] font-mono">
+                      {p.journal&&<span>Published in: <strong className="text-[#1a1a1a]">{p.journal}</strong></span>}
+                      {p.doi&&<span>DOI: <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noreferrer" className="text-[#b91c1c] hover:underline" onClick={e=>e.stopPropagation()}>{p.doi}</a></span>}
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-[#e8e4dc]">
+                      <h5 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Cite This Paper</h5>
+                      <div className="bg-[#f2f0eb] rounded p-3 text-[12px] text-[#3a3a3a] font-mono leading-relaxed">{p.authors} ({p.year}). &ldquo;{p.title}.&rdquo; {p.journal&&<em>{p.journal}</em>}.</div>
+                    </div>
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={(e)=>{e.stopPropagation();setReaderPaper(p)}} className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-sm font-semibold transition">Read Full Paper →</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              <div className="mt-10 pt-6 border-t border-[#d5d0c8]">
-                <h3 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Cite This Paper</h3>
-                <div className="bg-[#f2f0eb] rounded p-4 text-[12px] text-[#3a3a3a] font-mono leading-relaxed">{readerPaper.authors} ({readerPaper.year}). &ldquo;{readerPaper.title}.&rdquo; <em>{readerPaper.journal}</em>{readerPaper.doi&&`. DOI: ${readerPaper.doi}`}.</div>
-                <button onClick={()=>{navigator.clipboard.writeText(`${readerPaper.authors} (${readerPaper.year}). "${readerPaper.title}." ${readerPaper.journal||'JGSSO'}${readerPaper.doi?`. DOI: ${readerPaper.doi}`:''}.`)}} className="mt-2 bg-[#1a1a1a] hover:bg-[#333] text-white px-4 py-2 rounded text-[12px] font-semibold transition">Copy Citation</button>
+      {/* POLICY BRIEFS */}
+      <section id="policy-briefs" className="py-20 border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Think-Tank Output</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Policy Briefs</h2>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">Concise, policy-oriented analyses translating academic research into actionable recommendations for policymakers, diplomats, and institutional stakeholders.</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white border border-[#d5d0c8] rounded p-6 hover:border-[#b91c1c] transition">
+              <div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-2">Accepting Submissions</div>
+              <h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-2">Submit a Policy Brief</h3>
+              <p className="text-sm text-[#6b6b6b] font-light leading-relaxed mb-4">GSSO invites policy briefs (2,000–4,000 words) on topics within our research domains. Briefs should include an executive summary, policy context, analysis, and concrete recommendations.</p>
+              <a href="#call-for-papers" className="text-[#b91c1c] text-sm font-semibold hover:underline">See submission guidelines →</a>
+            </div>
+            <div className="bg-white border border-[#d5d0c8] rounded p-6 hover:border-[#b91c1c] transition">
+              <div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-2">Format</div>
+              <h3 className="font-serif text-lg font-bold text-[#1a1a1a] mb-2">Brief Structure</h3>
+              <div className="text-sm text-[#6b6b6b] font-light leading-relaxed space-y-2">
+                <p><strong className="text-[#1a1a1a]">Executive Summary</strong> — 200-word overview with key recommendation</p>
+                <p><strong className="text-[#1a1a1a]">Policy Context</strong> — Background and current state of the issue</p>
+                <p><strong className="text-[#1a1a1a]">Analysis</strong> — Evidence-based assessment with data and sourcing</p>
+                <p><strong className="text-[#1a1a1a]">Recommendations</strong> — Specific, actionable policy proposals</p>
+                <p><strong className="text-[#1a1a1a]">References</strong> — Chicago Author-Date citation style</p>
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* RESEARCH AREAS */}
+      <section className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Research Domains</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Areas of Expertise</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 border border-[#d5d0c8]" style={{gap:'1px',background:'#d5d0c8'}}>
+            {[['🌐','International Relations','State behaviour, alliance dynamics, and institutional evolution.'],['⚛️','Nuclear Strategy & Arms Control','Deterrence, non-proliferation, and weapons governance.'],['🗺️','Geopolitics & Grand Strategy','Great-power competition, maritime chokepoints, corridors of influence.'],['🛡️','Security & Defence','Security architectures, military strategy, and asymmetric warfare.'],['🏛️','Political Science','Comparative politics, governance, populism, and statecraft.'],['🕊️','Peace & Conflict','Conflict dynamics, reconstruction, and humanitarian law.'],['🤖','Technology & Statecraft','AI, cyber, quantum, and the weaponisation of technology.'],['🌍','Regional Studies','South Asia, Middle East, Indo-Pacific, and the Islamic world.']].map(([i,t,d])=>(
+              <div key={t} className="bg-white p-6 hover:bg-red-50 transition"><div className="text-2xl mb-3">{i}</div><h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold mb-2">{t}</h4><p className="text-[12px] text-[#6b6b6b] font-light leading-relaxed">{d}</p></div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* EDITORIAL BOARD & GOVERNANCE */}
+      <section id="editorial-board" className="py-20 border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Governance</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Editorial Board</h2>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">The GSSO Journal is governed by an independent editorial board of scholars and practitioners committed to the highest standards of peer-reviewed research.</p>
+
+          {/* Editor-in-Chief */}
+          <h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Editor-in-Chief</h3>
+          <div className="bg-white border border-[#d5d0c8] rounded p-6 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-full bg-[#f2f0eb] border border-[#d5d0c8] flex items-center justify-center font-serif text-lg text-[#999] shrink-0">EiC</div>
+              <div>
+                <div className="font-serif text-lg font-bold text-[#1a1a1a]">Position Open — Call for Applications</div>
+                <div className="font-mono text-[10px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Editor-in-Chief, GSSO Journal</div>
+                <p className="text-sm text-[#6b6b6b] font-light mt-2 leading-relaxed">We seek an established scholar (Associate Professor or above) with a distinguished publication record in international relations, strategic studies, or a cognate field. The Editor-in-Chief oversees editorial policy, manages the peer review process, and ensures the scholarly integrity of the journal.</p>
+                <a href="mailto:ceo@geostrategicstudies.org?subject=Application: Editor-in-Chief" className="inline-block mt-3 bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-sm font-semibold transition">Apply Now →</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Associate Editors */}
+          <h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Associate Editors (2–3 Positions)</h3>
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            {[
+              ['Nuclear Strategy & Arms Control','Deterrence theory, non-proliferation, arms control treaties, nuclear governance, and space security.'],
+              ['Geopolitics & Regional Security','Great-power competition, alliance dynamics, Middle East security, South Asian stability, and Indo-Pacific strategy.'],
+              ['Technology, Climate & Emerging Threats','AI and warfare, cyber operations, climate-security nexus, critical minerals, and disinformation.'],
+            ].map(([title,desc])=>(
+              <div key={title} className="bg-white border border-[#d5d0c8] rounded p-5 hover:border-[#b91c1c] transition">
+                <div className="font-mono text-[9px] text-[#b91c1c] uppercase tracking-wider mb-2">Open Position</div>
+                <h4 className="font-serif text-[15px] text-[#1a1a1a] font-semibold mb-2">{title}</h4>
+                <p className="text-[12px] text-[#6b6b6b] font-light leading-relaxed mb-3">{desc}</p>
+                <p className="text-[11px] text-[#999]">Seeking: Assistant/Associate Professor or Senior Postdoc with relevant peer-reviewed publications.</p>
+              </div>
+            ))}
+          </div>
+
+          {/* International Advisory Board */}
+          <h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">International Advisory Board (4–6 Positions)</h3>
+          <div className="bg-white border border-[#d5d0c8] rounded p-6 mb-8">
+            <p className="text-sm text-[#6b6b6b] font-light leading-relaxed mb-4">GSSO is establishing an International Advisory Board comprising mid-career and senior scholars from diverse institutions and geographies. Board members provide strategic guidance, participate in annual reviews, and lend institutional credibility to the journal.</p>
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              {['International Relations & Diplomacy','Strategic Studies & Defence','Political Economy & Development','Regional Specialisation (South Asia, Middle East, Indo-Pacific, Africa)'].map(area=>(
+                <div key={area} className="flex items-center gap-2"><div className="w-2 h-2 bg-[#b91c1c] rounded-full shrink-0"/><span className="text-sm text-[#3a3a3a]">{area}</span></div>
+              ))}
+            </div>
+            <p className="text-[11px] text-[#999] mb-3">Seeking: Assistant Professor, Associate Professor, Senior Postdoc, or Policy Researcher at a recognised institution.</p>
+            <a href="mailto:ceo@geostrategicstudies.org?subject=Expression of Interest: Advisory Board" className="inline-block bg-[#1a1a1a] hover:bg-[#333] text-white px-4 py-2 rounded text-sm font-semibold transition">Express Interest →</a>
+          </div>
+
+          {/* Founding Director */}
+          <h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Founding Director</h3>
+          <div className="bg-white border border-[#d5d0c8] rounded p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-full border-2 border-[#a67c37] overflow-hidden shrink-0">
+                <img src="/ceo-photo.png" alt="Dr. Naim Tahir Baig" className="w-full h-full object-cover"/>
+              </div>
+              <div>
+                <div className="font-serif text-lg font-bold text-[#1a1a1a]">Dr. Naim Tahir Baig</div>
+                <div className="font-mono text-[10px] text-[#b91c1c] uppercase tracking-wider mt-0.5">Founding Director, GSSO</div>
+                <p className="text-sm text-[#6b6b6b] font-light mt-2 leading-relaxed">Ph.D. in International Relations. Founding director of GSSO, with published research on nuclear deterrence, geopolitics, and South Asian security. Author of independently published works available on Amazon, Barnes & Noble, and other platforms.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CALL FOR PAPERS */}
+      <section id="call-for-papers" className="py-20 bg-[#0c1220] text-white">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#a67c37] uppercase">Open Call</div>
+          <h2 className="font-serif text-3xl font-bold text-white mt-2 mb-2">Call for Papers</h2>
+          <p className="text-white/50 max-w-2xl font-light mb-10">The GSSO Journal of International Security Studies (ISSN: 2960-0001) invites original submissions from scholars, analysts, and practitioners worldwide for its upcoming issues.</p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-serif text-xl font-bold text-white mb-4">Submission Guidelines</h3>
+              <div className="space-y-4 text-sm text-white/50 font-light leading-relaxed">
+                <p><strong className="text-white">Research Papers:</strong> 5,000–12,000 words including references. Must include abstract (200–300 words), keywords, and complete bibliography.</p>
+                <p><strong className="text-white">Policy Briefs:</strong> 2,000–4,000 words. Executive summary, policy context, evidence-based analysis, and concrete recommendations.</p>
+                <p><strong className="text-white">Strategic Commentaries:</strong> 1,500–3,000 words. Timely analysis of emerging strategic developments.</p>
+                <p><strong className="text-white">Book Reviews:</strong> 1,000–2,000 words. Critical assessments of recently published works in our subject domains.</p>
+                <p><strong className="text-white">Citation Style:</strong> Chicago Manual of Style (Author-Date system).</p>
+                <p><strong className="text-white">Review Process:</strong> All research papers and policy briefs undergo double-blind peer review. Initial editorial screening: 7–10 days. Full peer review: 6–8 weeks.</p>
+                <p><strong className="text-white">Open Access:</strong> Accepted papers are published open-access on geostrategicstudies.org.</p>
+              </div>
+
+              <h3 className="font-serif text-xl font-bold text-white mt-8 mb-4">Topics of Interest</h3>
+              <div className="grid grid-cols-2 gap-2">
+                {['International Relations Theory','Nuclear Deterrence & Arms Control','Great-Power Competition','Geopolitics & Grand Strategy','Regional Security Architectures','AI & Emerging Technology in Warfare','Climate-Security Nexus','Maritime & Space Security','Political Economy of Defence','Conflict Resolution & Peace Studies','Disinformation & Epistemic Security','Global South & Non-Alignment'].map(t=>(
+                  <div key={t} className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-[#a67c37] rounded-full shrink-0"/><span className="text-[12px] text-white/50">{t}</span></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white/[.04] border border-white/[.08] rounded p-6">
+              {paperSent?(
+                <div className="text-center py-8"><div className="text-3xl mb-3">✓</div><h3 className="font-serif text-xl font-bold">Submission Received</h3><p className="text-white/50 text-sm mt-2">Our editorial team will respond within 7–10 days.</p></div>
+              ):(
+                <>
+                  <h3 className="font-serif text-lg font-bold text-white mb-4">Submit Your Manuscript</h3>
+                  <form onSubmit={submitPaper} className="space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <input required placeholder="Full Name / Title" value={paperForm.authorName} onChange={e=>setPaperForm({...paperForm,authorName:e.target.value})} className="bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                      <input required type="email" placeholder="Institutional Email" value={paperForm.authorEmail} onChange={e=>setPaperForm({...paperForm,authorEmail:e.target.value})} className="bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                    </div>
+                    <input placeholder="Institution / Affiliation" value={paperForm.institution} onChange={e=>setPaperForm({...paperForm,institution:e.target.value})} className="w-full bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                    <select value={paperForm.type} onChange={e=>setPaperForm({...paperForm,type:e.target.value})} className="w-full bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none">
+                      <option value="paper" className="bg-[#0c1220]">Research Paper</option>
+                      <option value="brief" className="bg-[#0c1220]">Policy Brief</option>
+                      <option value="commentary" className="bg-[#0c1220]">Strategic Commentary</option>
+                      <option value="review" className="bg-[#0c1220]">Book Review</option>
+                    </select>
+                    <input required placeholder="Paper Title" value={paperForm.title} onChange={e=>setPaperForm({...paperForm,title:e.target.value})} className="w-full bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                    <textarea required rows={4} placeholder="Abstract (200–300 words)" value={paperForm.abstract} onChange={e=>setPaperForm({...paperForm,abstract:e.target.value})} className="w-full bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                    <input placeholder="Keywords (comma separated)" value={paperForm.keywords} onChange={e=>setPaperForm({...paperForm,keywords:e.target.value})} className="w-full bg-white/[.05] border border-white/10 rounded px-3 py-2 text-sm text-white focus:border-[#a67c37] outline-none"/>
+                    <button type="submit" className="w-full bg-[#b91c1c] hover:bg-[#8b1515] text-white py-3 rounded text-sm font-semibold transition">Submit for Review →</button>
+                    <p className="text-[10px] text-white/30 text-center">By submitting, you confirm this manuscript is original and not under review elsewhere.</p>
+                  </form>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FURTHER READING & RESOURCES */}
+      <section id="resources" className="py-20 border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Reference</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Further Reading & Resources</h2>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">Academic journals, databases, and international organisations relevant to strategic studies and international security research.</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 border border-[#d5d0c8]" style={{gap:'1px',background:'#d5d0c8'}}>
+            {resources.map(([n,d,u])=>(
+              <a key={n} href={u} target="_blank" rel="noreferrer" className="bg-white p-4 hover:bg-red-50 transition block no-underline">
+                <h4 className="text-[13px] font-semibold text-[#1a1a1a] mb-0.5">{n}</h4>
+                <p className="text-[11px] text-[#6b6b6b] font-light">{d}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" className="py-20 bg-[#f2f0eb] border-b border-[#d5d0c8]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Contact</div>
+          <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-8">Get In Touch</h2>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <p className="text-[#6b6b6b] font-light leading-relaxed mb-6">For editorial inquiries, manuscript submissions, board applications, or institutional collaboration.</p>
+              {[['✉','General Enquiries','ceo@geostrategicstudies.org'],['✉','Editorial Office','drnaimtahirbaig@geostrategicstudies.org'],['🌐','Website','geostrategicstudies.org']].map(([i,l,v])=>(
+                <div key={l} className="flex gap-3 mb-4 items-start">
+                  <div className="w-9 h-9 border border-[#d5d0c8] rounded flex items-center justify-center shrink-0 text-sm">{i}</div>
+                  <div className="text-[14px] text-[#6b6b6b]"><strong className="text-[#1a1a1a] block">{l}</strong>{v}</div>
+                </div>
+              ))}
+            </div>
+            <div>
+              {contactSent?(
+                <div className="text-center py-12"><div className="text-3xl mb-3">✓</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a]">Message Sent</h3><p className="text-[#6b6b6b] text-sm mt-2">We will respond within 48 hours.</p></div>
+              ):(
+                <form onSubmit={submitContact} className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <input required placeholder="Full Name" value={contactForm.name} onChange={e=>setContactForm({...contactForm,name:e.target.value})} className="border border-[#d5d0c8] rounded px-3 py-2.5 text-sm focus:border-[#b91c1c] outline-none bg-white"/>
+                    <input required type="email" placeholder="Email" value={contactForm.email} onChange={e=>setContactForm({...contactForm,email:e.target.value})} className="border border-[#d5d0c8] rounded px-3 py-2.5 text-sm focus:border-[#b91c1c] outline-none bg-white"/>
+                  </div>
+                  <input placeholder="Organisation / Institution" value={contactForm.organisation} onChange={e=>setContactForm({...contactForm,organisation:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2.5 text-sm focus:border-[#b91c1c] outline-none bg-white"/>
+                  <select value={contactForm.subject} onChange={e=>setContactForm({...contactForm,subject:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2.5 text-sm focus:border-[#b91c1c] outline-none bg-white">
+                    {['Editorial Inquiry','Manuscript Submission','Board Application','Institutional Collaboration','Media Inquiry','General'].map(o=><option key={o} value={o}>{o}</option>)}
+                  </select>
+                  <textarea required rows={4} placeholder="Your message..." value={contactForm.message} onChange={e=>setContactForm({...contactForm,message:e.target.value})} className="w-full border border-[#d5d0c8] rounded px-3 py-2.5 text-sm focus:border-[#b91c1c] outline-none bg-white"/>
+                  <button type="submit" className="w-full bg-[#b91c1c] hover:bg-[#8b1515] text-white py-3 rounded text-sm font-semibold transition">Send Message →</button>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#080d18] text-white/30 py-12 border-t-[3px] border-[#b91c1c]">
+        <div className="max-w-[1200px] mx-auto px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div className="col-span-2 md:col-span-1 max-w-xs">
+              <div className="font-serif text-white/70 font-bold">Geo Strategic Studies</div>
+              <div className="font-mono text-[9px] tracking-wider text-white/20 uppercase mt-0.5">Organisation · Independent Think-Tank</div>
+              <p className="text-sm mt-3 leading-relaxed">Independent, peer-reviewed research in international relations, strategic studies, and global affairs.</p>
+              <div className="font-mono text-[10px] text-white/20 mt-2">ISSN: 2960-0001 (Online)</div>
+            </div>
+            <div className="text-sm space-y-2">
+              <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Journal</div>
+              <a href="#journal" className="block hover:text-[#a67c37] transition">Current Issue</a>
+              <a href="#policy-briefs" className="block hover:text-[#a67c37] transition">Policy Briefs</a>
+              <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Call for Papers</a>
+              <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Submission Guidelines</a>
+            </div>
+            <div className="text-sm space-y-2">
+              <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Organisation</div>
+              <a href="#about" className="block hover:text-[#a67c37] transition">About GSSO</a>
+              <a href="#editorial-board" className="block hover:text-[#a67c37] transition">Editorial Board</a>
+              <a href="#editorial-board" className="block hover:text-[#a67c37] transition">Join Our Team</a>
+              <a href="#resources" className="block hover:text-[#a67c37] transition">Resources</a>
+            </div>
+            <div className="text-sm space-y-2">
+              <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Contact</div>
+              <a href="mailto:ceo@geostrategicstudies.org" className="block hover:text-[#a67c37] transition">ceo@geostrategicstudies.org</a>
+              <a href="#contact" className="block hover:text-[#a67c37] transition">Contact Form</a>
+            </div>
+          </div>
+          <div className="border-t border-white/[.06] pt-6 flex justify-between items-center flex-wrap gap-4 text-[11px]">
+            <span>&copy; 2026 Geo Strategic Studies Organisation. All rights reserved.</span>
+            <span className="font-mono text-[10px] text-white/20">GSSO Journal · ISSN: 2960-0001 · Peer-Reviewed · Open Access</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* READING PANEL */}
+      {readerPaper&&(<div className="fixed inset-0 z-[100] flex">
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={()=>setReaderPaper(null)}/>
+        <div className="relative ml-auto w-full max-w-[900px] bg-[#faf9f6] h-full overflow-y-auto shadow-2xl" style={{animation:'slideIn .3s ease'}}>
+          <style>{`@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}`}</style>
+          <div className="sticky top-0 z-10 bg-[#0c1220] text-white px-8 py-4 flex justify-between items-center">
+            <div className="flex-1 min-w-0"><div className="font-mono text-[9px] tracking-wider text-[#a67c37] uppercase">GSSO · ISSN: 2960-0001</div><div className="font-serif text-sm font-semibold truncate mt-0.5">{readerPaper.title}</div></div>
+            <div className="flex items-center gap-3 ml-4 shrink-0">
+              <button onClick={()=>setReaderFontSize(s=>Math.max(12,s-2))} className="w-8 h-8 rounded bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition">A-</button>
+              <button onClick={()=>setReaderFontSize(s=>Math.min(24,s+2))} className="w-8 h-8 rounded bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition">A+</button>
+              <button onClick={()=>setReaderPaper(null)} className="w-8 h-8 rounded bg-white/10 hover:bg-red-500/30 text-white flex items-center justify-center text-lg transition">&times;</button>
+            </div>
+          </div>
+          <div className="px-8 md:px-16 py-10"><div className="max-w-[680px] mx-auto">
+            <span className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded ${readerPaper.type==='paper'?'bg-red-50 text-[#b91c1c]':'bg-green-50 text-green-700'}`}>{readerPaper.type==='paper'?'Research Paper':'Policy Brief'}</span>
+            <h1 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-4 mb-3 leading-tight">{readerPaper.title}</h1>
+            <div className="text-[#b91c1c] font-medium mb-1">{readerPaper.authors}</div>
+            <div className="flex flex-wrap gap-3 text-[12px] text-[#999] font-mono mb-8">{readerPaper.journal&&<span>{readerPaper.journal}</span>}{readerPaper.doi&&<span>DOI: {readerPaper.doi}</span>}</div>
+            <div className="bg-[#f2f0eb] border border-[#d5d0c8] rounded p-6 mb-8"><h2 className="font-mono text-[10px] uppercase tracking-wider text-[#b91c1c] mb-2">Abstract</h2><p style={{fontSize:readerFontSize+'px'}} className="text-[#3a3a3a] leading-relaxed font-serif">{readerPaper.abstract}</p></div>
+            {readerPaper.tags&&<div className="mb-8"><div className="flex flex-wrap gap-2">{readerPaper.tags.split(',').map(t=><span key={t} className="font-mono text-[11px] px-3 py-1 bg-[#f2f0eb] border border-[#d5d0c8] rounded text-[#6b6b6b]">{t.trim()}</span>)}</div></div>}
+            {readerPaper.url&&readerPaper.url.endsWith('.pdf')?(
+              <div><div className="flex gap-2 mb-4"><a href={readerPaper.url} target="_blank" rel="noreferrer" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-4 py-2 rounded text-[12px] font-semibold transition">Download PDF</a></div><iframe src={readerPaper.url} className="w-full border border-[#d5d0c8] rounded" style={{height:'80vh'}} title={readerPaper.title}/></div>
+            ):(
+              <div className="bg-white border border-[#d5d0c8] rounded p-10 text-center"><div className="text-4xl mb-4">📄</div><h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-2">Full Text</h3><p className="text-sm text-[#6b6b6b] mb-6">Contact the editorial office to request the full manuscript.</p><a href="mailto:ceo@geostrategicstudies.org" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-5 py-2.5 rounded text-sm font-semibold transition">Request Full Text</a></div>
+            )}
+            <div className="mt-10 pt-6 border-t border-[#d5d0c8]"><h3 className="font-mono text-[10px] uppercase tracking-wider text-[#999] mb-2">Cite This Paper</h3><div className="bg-[#f2f0eb] rounded p-4 text-[12px] text-[#3a3a3a] font-mono leading-relaxed">{readerPaper.authors} ({readerPaper.year}). &ldquo;{readerPaper.title}.&rdquo; <em>{readerPaper.journal}</em>{readerPaper.doi&&`. DOI: ${readerPaper.doi}`}.</div></div>
+          </div></div>
+        </div>
       </div>)}
 
-      {showBtt&&(<button onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} className="fixed bottom-8 right-8 w-11 h-11 bg-[#b91c1c] hover:bg-[#8b1515] text-white rounded-full flex items-center justify-center shadow-lg transition z-50 text-lg">↑</button>)}
+      {/* BACK TO TOP */}
+      {showBtt&&(<button onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} className="fixed bottom-8 right-8 w-11 h-11 bg-[#b91c1c] hover:bg-[#8b1515] text-white rounded-full flex items-center justify-center shadow-lg transition z-50 text-lg">&uarr;</button>)}
     </div>
   );
 }

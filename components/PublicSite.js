@@ -50,7 +50,7 @@ export default function PublicSite({ data }) {
       {/* TOPBAR */}
       <div className="bg-[#0c1220] py-1.5 text-[11px] text-white/50 tracking-wide">
         <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
-          <span>Geo-Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
+          <span>Geo Strategic Studies Organisation — Independent Think-Tank & Research Journal</span>
           <div className="space-x-4 hidden md:block">
             <a href="mailto:ceo@geostrategicstudies.org" className="hover:text-white/80 transition">ceo@geostrategicstudies.org</a>
             <a href="#call-for-papers" className="hover:text-white/80 transition">Call for Papers</a>
@@ -63,7 +63,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8 py-3 flex justify-between items-center">
           <a href="#" className="flex items-center gap-3">
             <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#0c1220" strokeWidth="1.5"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(25 22 22)"/><ellipse cx="22" cy="22" rx="12" ry="20" stroke="#0c1220" strokeWidth="1" transform="rotate(-25 22 22)"/><circle cx="22" cy="22" r="2.5" fill="#b91c1c"/></svg>
-            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo-Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
+            <div><strong className="font-serif text-lg text-[#1a1a1a]">Geo Strategic Studies</strong><br/><span className="font-mono text-[9px] tracking-[.22em] text-[#b91c1c] uppercase">Organisation · Independent Think-Tank</span></div>
           </a>
           <div className="hidden lg:flex items-center gap-1">
             {['About','Journal','Policy Briefs','Editorial Board','Resources','Call for Papers','Contact'].map(i=>(
@@ -80,7 +80,7 @@ export default function PublicSite({ data }) {
           <div>
             <div className="font-mono text-[10px] tracking-[.3em] text-[#a67c37] mb-6 flex items-center gap-3"><span className="w-10 h-px bg-[#a67c37]"/>POLICY · RESEARCH · ANALYSIS</div>
             <h1 className="font-serif text-4xl md:text-5xl font-bold leading-[1.08] mb-6">Independent <em className="text-[#a67c37] italic">Strategic Research</em> for a Complex World</h1>
-            <p className="text-white/50 text-lg max-w-xl mb-8 font-light leading-relaxed">A peer-reviewed research journal and policy institute dedicated to rigorous scholarship in international relations, strategic studies, nuclear deterrence, geopolitics, and peace.</p>
+            <p className="text-white/50 text-lg max-w-xl mb-8 font-light leading-relaxed">An independent research institute publishing working papers, policy briefs, and building toward a fully peer-reviewed journal in international relations, strategic studies, and geopolitics.</p>
             <div className="flex gap-3 flex-wrap">
               <a href="#journal" className="bg-[#b91c1c] hover:bg-[#8b1515] text-white px-6 py-3 rounded text-sm font-semibold transition">Current Issue →</a>
               <a href="#call-for-papers" className="border border-white/30 hover:bg-white/10 text-white px-6 py-3 rounded text-sm font-semibold transition">Submit Research</a>
@@ -116,12 +116,12 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">About the Organisation</div>
           <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Mission & Mandate</h2>
-          <p className="text-[#6b6b6b] max-w-2xl font-light mb-10">{content.about_mission || 'The GSSO is an independent research institution dedicated to producing rigorous, peer-reviewed scholarship in international relations, strategic studies, and peace.'}</p>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-10">{content.about_mission || 'The GSSO is an independent research institution producing working papers and building toward a fully peer-reviewed journal in international relations, strategic studies, and peace.'}</p>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              ['01','Working Papers & Forthcoming Peer-Reviewed Research',content.about_research||'We produce independently published, peer-reviewed research across international relations, nuclear strategy, regional security, and emerging threats.'],
+              ['01','Peer-Reviewed Research',content.about_research||'We produce independent research and working papers across international relations, nuclear strategy, regional security, and emerging threats.'],
               ['02','Policy Analysis','Strategic briefs and analyses for decision-makers navigating great-power competition, alliance dynamics, arms control, and regional instability.'],
-              ['03','Open-Access Journal',content.about_journal||'The GSSO Journal publishes original, peer-reviewed research papers, policy briefs, and strategic commentaries. All submissions undergo double-blind peer review.'],
+              ['03','Open-Access Journal',content.about_journal||'The GSSO Journal will publish original, peer-reviewed research papers, policy briefs, and strategic commentaries from its inaugural issue. All journal submissions will undergo double-blind peer review.'],
             ].map(([n,t,d])=>(
               <div key={n} className="pt-6 border-t-2 border-[#1a1a1a]">
                 <div className="font-mono text-[11px] text-[#999] mb-3">{n}</div>
@@ -231,7 +231,7 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="font-mono text-[11px] tracking-[.2em] text-[#b91c1c] uppercase">Governance</div>
           <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mt-2 mb-2">Editorial Board</h2>
-          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">The GSSO Journal is governed by an independent editorial board of scholars and practitioners committed to the highest standards of peer-reviewed research.</p>
+          <p className="text-[#6b6b6b] max-w-2xl font-light mb-8">The GSSO Journal is governed by an independent editorial board of scholars and practitioners committed to the highest standards of scholarly research.</p>
 
           {/* Editor-in-Chief */}
           <h3 className="font-serif text-lg text-[#1a1a1a] font-semibold mb-4 pb-2 border-b-2 border-[#1a1a1a]">Editor-in-Chief</h3>
@@ -459,9 +459,9 @@ export default function PublicSite({ data }) {
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-2 md:col-span-1 max-w-xs">
-              <div className="font-serif text-white/70 font-bold">Geo-Strategic Studies</div>
+              <div className="font-serif text-white/70 font-bold">Geo Strategic Studies</div>
               <div className="font-mono text-[9px] tracking-wider text-white/20 uppercase mt-0.5">Organisation · Independent Think-Tank</div>
-              <p className="text-sm mt-3 leading-relaxed">Independent, peer-reviewed research in international relations, strategic studies, and global affairs.</p>
+              <p className="text-sm mt-3 leading-relaxed">Independent research, working papers, and a forthcoming peer-reviewed journal in international relations and strategic studies.</p>
               <div className="font-mono text-[10px] text-white/20 mt-2">ISSN: 2960-0001 (Online)</div>
             </div>
             <div className="text-sm space-y-2">
@@ -471,6 +471,8 @@ export default function PublicSite({ data }) {
               <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Call for Papers</a>
               <a href="#call-for-papers" className="block hover:text-[#a67c37] transition">Submission Guidelines</a>
               <a href="/peer-review-policy" className="block hover:text-[#a67c37] transition">Peer Review Policy</a>
+              <a href="/ethics" className="block hover:text-[#a67c37] transition">Publication Ethics</a>
+              <a href="/masthead" className="block hover:text-[#a67c37] transition">Masthead</a>
             </div>
             <div className="text-sm space-y-2">
               <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Organisation</div>
@@ -483,11 +485,13 @@ export default function PublicSite({ data }) {
               <div className="font-mono text-[10px] text-white/50 uppercase tracking-wider mb-3">Contact</div>
               <a href="mailto:ceo@geostrategicstudies.org" className="block hover:text-[#a67c37] transition">ceo@geostrategicstudies.org</a>
               <a href="#contact" className="block hover:text-[#a67c37] transition">Contact Form</a>
+              <a href="/privacy" className="block hover:text-[#a67c37] transition">Privacy Policy</a>
+              <a href="/terms" className="block hover:text-[#a67c37] transition">Terms of Use</a>
             </div>
           </div>
           <div className="border-t border-white/[.06] pt-6 flex justify-between items-center flex-wrap gap-4 text-[11px]">
-            <span>&copy; 2026 Geo-Strategic Studies Organisation. All rights reserved.</span>
-            <span className="font-mono text-[10px] text-white/20">GSSO Journal · ISSN: 2960-0001 · Peer-Reviewed · Open Access</span>
+            <span>&copy; 2026 Geo Strategic Studies Organisation. All rights reserved.</span>
+            <span className="font-mono text-[10px] text-white/20">GSSO · ISSN: 2960-0001 · Working Papers · Open Access</span>
           </div>
         </div>
       </footer>

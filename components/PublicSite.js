@@ -14,12 +14,19 @@ export default function PublicSite({ data }) {
   const [expandedPaper, setExpandedPaper] = useState(null);
   const [readerPaper, setReaderPaper] = useState(null);
   const [readerFontSize, setReaderFontSize] = useState(16);
+  const [heroSlide, setHeroSlide] = useState(0);
 
   useEffect(() => {
     const h = () => setShowBtt(window.scrollY > 600);
     window.addEventListener('scroll', h, { passive: true });
     return () => window.removeEventListener('scroll', h);
   }, []);
+
+  useEffect(() => {
+    if (papers.length === 0) return;
+    const t = setInterval(() => setHeroSlide(s => (s + 1) % Math.min(papers.length, 6)), 4000);
+    return () => clearInterval(t);
+  }, [papers.length]);
 
   const filteredPapers = filter === 'all' ? papers : papers.filter(p => p.type === filter);
   const submitContact = async (e) => { e.preventDefault(); await fetch('/api/submissions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...contactForm, type: 'contact' }) }); setContactSent(true); };
@@ -88,13 +95,26 @@ export default function PublicSite({ data }) {
             </div>
           </div>
           <div className="bg-white/[.04] border border-white/[.08] rounded p-6">
-            <div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase">Working Paper Series (2026)</div>
-            {papers.slice(0,3).map(p=>(
-              <div key={p.id} className="py-3 border-t border-white/[.06] first:border-0 first:pt-0">
-                <h4 className="font-serif text-[15px] text-white/90 font-semibold leading-tight">{p.title}</h4>
-                <div className="font-mono text-[11px] text-white/30 mt-1">{p.authors}</div>
-              </div>
-            ))}
+            <div className="font-mono text-[9px] tracking-[.2em] text-[#a67c37] mb-4 uppercase flex justify-between items-center">
+              <span>Working Paper Series (2026)</span>
+              <span className="text-white/30">{heroSlide+1}/{Math.min(papers.length,6)}</span>
+            </div>
+            <div className="relative overflow-hidden" style={{minHeight:'120px'}}>
+              {papers.slice(0,6).map((p,idx)=>(
+                <div key={p.id} className={`transition-all duration-500 ${idx===heroSlide?'opacity-100 translate-y-0':'opacity-0 absolute top-0 left-0 right-0 translate-y-4'}`}>
+                  <a href="#journal" onClick={(e)=>{e.preventDefault();setExpandedPaper(p.id);document.getElementById('journal')?.scrollIntoView({behavior:'smooth'})}} className="block cursor-pointer group no-underline">
+                    <h4 className="font-serif text-[17px] text-white/90 font-semibold leading-tight group-hover:text-[#a67c37] transition">{p.title}</h4>
+                    <div className="font-mono text-[11px] text-white/30 mt-1">{p.authors}</div>
+                    <div className="font-mono text-[10px] text-[#b91c1c] mt-2 group-hover:text-[#a67c37] transition">Read paper →</div>
+                  </a>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-1.5 mt-4">
+              {papers.slice(0,6).map((_,idx)=>(
+                <button key={idx} onClick={()=>setHeroSlide(idx)} className={`h-1 rounded-full transition-all ${idx===heroSlide?'bg-[#a67c37] w-6':'bg-white/20 w-3 hover:bg-white/40'}`}/>
+              ))}
+            </div>
             <div className="mt-5 pt-5 border-t border-white/[.06] text-center">
               <div className="font-mono text-[10px] text-white/30 uppercase tracking-wider">ISSN: 2960-0001 (Online)</div>
               <div className="font-mono text-[10px] text-white/20 mt-1">Working Papers · Open Access · Peer Review from Issue 1 (forthcoming)</div>
@@ -425,11 +445,11 @@ export default function PublicSite({ data }) {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <p className="text-[#6b6b6b] font-light leading-relaxed mb-6">For editorial inquiries, manuscript submissions, board applications, or institutional collaboration.</p>
-              {[['✉','General Enquiries','info@geostrategicstudies.org'],['✉','Editorial & Submissions','submissions@geostrategicstudies.org'],['✉','Editor','editor@geostrategicstudies.org'],['🌐','Website','geostrategicstudies.org']].map(([i,l,v])=>(
-                <div key={l} className="flex gap-3 mb-4 items-start">
+              {[['✉','General Enquiries','info@geostrategicstudies.org','mailto:info@geostrategicstudies.org'],['✉','Editorial & Submissions','submissions@geostrategicstudies.org','mailto:submissions@geostrategicstudies.org'],['✉','Editor','editor@geostrategicstudies.org','mailto:editor@geostrategicstudies.org'],['🌐','Website','geostrategicstudies.org','https://geostrategicstudies.org']].map(([i,l,v,href])=>(
+                <a key={l} href={href} target={href.startsWith('https')?'_blank':undefined} rel={href.startsWith('https')?'noreferrer':undefined} className="flex gap-3 mb-4 items-start p-3 -ml-3 rounded hover:bg-white border border-transparent hover:border-[#d5d0c8] transition cursor-pointer no-underline">
                   <div className="w-9 h-9 border border-[#d5d0c8] rounded flex items-center justify-center shrink-0 text-sm">{i}</div>
                   <div className="text-[14px] text-[#6b6b6b]"><strong className="text-[#1a1a1a] block">{l}</strong>{v}</div>
-                </div>
+                </a>
               ))}
             </div>
             <div>
